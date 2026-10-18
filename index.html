@@ -3,19 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050e16">
+<meta name="theme-color" content="#14080f">
 <title>Cape Town · our checklist</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* palette pulled from Table Bay at first light, not from a UI kit */
-  --night:#050e16; --deep:#081726; --panel:#0a1a26; --panel2:#081420;
-  --line:rgba(255,255,255,.085); --line2:rgba(255,255,255,.14);
-  --ink:#eef4f7; --muted:#8fa6b4; --dim:#63798a;
-  --amber:#f0a05a; --amber2:#e08a4a; --sea:#5ec8c0;
-  --me:#5ec8c0; --them:#e88bb0; --good:#6fcf7f; --bad:#ef6b5a;
+  /* last light over Table Bay: plum → wine → coral → gold */
+  --night:#14080f; --deep:#1d0d16; --panel:#241119; --panel2:#1b0c13;
+  --line:rgba(255,214,186,.11); --line2:rgba(255,214,186,.2);
+  --ink:#fdf1e7; --muted:#cfae9d; --dim:#a2837a;
+  --amber:#ffb066; --amber2:#ff8f52;
+  --sea:#ffcf8a;            /* warm accent, kept under the old name */
+  --me:#ffc78a; --them:#ff8fa8; --good:#8fd694; --bad:#ff6b5a;
   --serif:"Fraunces", ui-serif, "Iowan Old Style", Palatino, Georgia, serif;
   --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --r:16px;
@@ -30,7 +31,7 @@ body{
 .wrap{max-width:720px;margin:0 auto;padding:0 18px}
 
 /* ============ HERO: Table Bay, first light ============ */
-.hero{position:relative;height:clamp(300px,60vw,392px);overflow:hidden;background:var(--night)}
+.hero{position:relative;height:clamp(300px,60vw,392px);overflow:hidden;background:#1e0b16}
 .artboard{position:absolute;inset:0}
 .hero svg.scene.scene-tall{display:none}
 @media (max-width:599px){
@@ -38,7 +39,7 @@ body{
   .hero{height:auto;background:transparent;overflow:visible;display:flex;flex-direction:column}
   .artboard{position:relative;inset:auto;order:2;height:252px;overflow:hidden}
   .heroIn{order:1;padding-top:24px}
-  .hero .scrim{background:linear-gradient(180deg,rgba(5,14,22,.95) 0%,rgba(5,14,22,.4) 11%,rgba(5,14,22,0) 30%,rgba(5,14,22,0) 56%,rgba(5,14,22,.97) 100%)}
+  .hero .scrim{background:linear-gradient(180deg,rgba(20,8,15,.95) 0%,rgba(20,8,15,.4) 11%,rgba(20,8,15,0) 30%,rgba(20,8,15,0) 56%,rgba(20,8,15,.97) 100%)}
   .hero svg.scene.scene-wide{display:none}
   .hero svg.scene.scene-tall{display:block}
 }
@@ -46,8 +47,8 @@ body{
 .hero .scrim{
   position:absolute;inset:0;
   background:
-    linear-gradient(100deg, rgba(3,10,16,.88) 0%, rgba(3,10,16,.5) 32%, rgba(3,10,16,0) 60%),
-    linear-gradient(180deg, rgba(4,12,18,.55) 0%, transparent 26%, transparent 72%, rgba(5,14,22,.96) 100%);
+    linear-gradient(100deg, rgba(20,8,15,.86) 0%, rgba(20,8,15,.44) 32%, rgba(20,8,15,0) 60%),
+    linear-gradient(180deg, rgba(20,8,15,.5) 0%, transparent 26%, transparent 72%, rgba(20,8,15,.97) 100%);
 }
 .heroIn{position:relative;max-width:720px;margin:0 auto;padding:26px 18px 0}
 .kicker{
@@ -67,10 +68,10 @@ h1 em{font-style:italic;font-weight:600;color:var(--amber)}
 /* countdown rides the horizon line */
 .cd{
   position:relative;z-index:3;margin:-64px 0 0;
-  background:linear-gradient(180deg, rgba(10,26,38,.86), rgba(7,18,28,.94));
+  background:linear-gradient(180deg, rgba(40,18,27,.88), rgba(24,10,17,.95));
   border:1px solid var(--line2); border-radius:18px;
   padding:14px 15px 12px;
-  box-shadow:0 26px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.07);
+  box-shadow:0 26px 60px rgba(20,4,10,.62), inset 0 1px 0 rgba(255,224,196,.12);
   backdrop-filter:blur(16px) saturate(1.15);
   -webkit-backdrop-filter:blur(16px) saturate(1.15);
 }
@@ -78,7 +79,7 @@ h1 em{font-style:italic;font-weight:600;color:var(--amber)}
 .cd .lbl{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:800}
 .cd .when{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
 .cd .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}
-.cd .u{text-align:center;padding:8px 2px 7px;border-radius:11px;background:rgba(4,14,20,.55);border:1px solid rgba(255,255,255,.06)}
+.cd .u{text-align:center;padding:8px 2px 7px;border-radius:11px;background:rgba(30,12,20,.6);border:1px solid rgba(255,214,186,.09)}
 .cd .n{
   font-size:clamp(24px,7vw,32px);font-weight:800;font-variant-numeric:tabular-nums;
   letter-spacing:-1.2px;line-height:1;color:var(--ink);
@@ -242,115 +243,126 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
   <div class="artboard">
   <svg class="scene scene-wide" viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#030c17"/>
-        <stop offset="30%"  stop-color="#072031"/>
-        <stop offset="52%"  stop-color="#113f50"/>
-        <stop offset="70%"  stop-color="#2b6b77"/>
-        <stop offset="84%"  stop-color="#6d8b81"/>
-        <stop offset="93%"  stop-color="#c18753"/>
-        <stop offset="100%" stop-color="#e3a96d"/>
+      <linearGradient id="skyS" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#2b0c2e"/>
+        <stop offset="20%"  stop-color="#4a123a"/>
+        <stop offset="40%"  stop-color="#7c2244"/>
+        <stop offset="58%"  stop-color="#b8443c"/>
+        <stop offset="72%"  stop-color="#e06f3f"/>
+        <stop offset="84%"  stop-color="#f4a25c"/>
+        <stop offset="93%"  stop-color="#ffd08a"/>
+        <stop offset="100%" stop-color="#ffeec4"/>
       </linearGradient>
-      <radialGradient id="dawn" cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0%"   stop-color="#ffc089" stop-opacity=".8"/>
-        <stop offset="45%"  stop-color="#f0913f" stop-opacity=".24"/>
-        <stop offset="100%" stop-color="#f0913f" stop-opacity="0"/>
+      <radialGradient id="sunS" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%"   stop-color="#fff8e2"/>
+        <stop offset="42%"  stop-color="#ffd88f"/>
+        <stop offset="100%" stop-color="#ff9d5c"/>
       </radialGradient>
-      <linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#123541"/>
-        <stop offset="22%"  stop-color="#0a2130"/>
-        <stop offset="100%" stop-color="#04101a"/>
+      <radialGradient id="glowS" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%"   stop-color="#ffb877" stop-opacity=".62"/>
+        <stop offset="45%"  stop-color="#ff7e4a" stop-opacity=".2"/>
+        <stop offset="100%" stop-color="#ff7e4a" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="seaS" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#c2704a"/>
+        <stop offset="14%"  stop-color="#7e3644"/>
+        <stop offset="45%"  stop-color="#4a1c2c"/>
+        <stop offset="100%" stop-color="#1c0b14"/>
       </linearGradient>
-      <linearGradient id="reflect" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#ffa863" stop-opacity=".40"/>
-        <stop offset="60%"  stop-color="#ffa863" stop-opacity=".10"/>
-        <stop offset="100%" stop-color="#ffa863" stop-opacity="0"/>
+      <linearGradient id="reflectS" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#ffdca6" stop-opacity=".62"/>
+        <stop offset="55%"  stop-color="#ffb877" stop-opacity=".16"/>
+        <stop offset="100%" stop-color="#ffb877" stop-opacity="0"/>
       </linearGradient>
-      <linearGradient id="fadeBot" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#050e16" stop-opacity="0"/>
-        <stop offset="100%" stop-color="#050e16" stop-opacity="1"/>
+      <linearGradient id="fadeS" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#14080f" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#14080f" stop-opacity="1"/>
       </linearGradient>
-      <filter id="soft"><feGaussianBlur stdDeviation="9"/></filter>
-      <filter id="soft2"><feGaussianBlur stdDeviation="3.2"/></filter>
+      <filter id="softS"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="softS2"><feGaussianBlur stdDeviation="3.2"/></filter>
     </defs>
 
-    <!-- sky -->
-    <rect x="0" y="0" width="1440" height="460" fill="url(#sky)"/>
-    <ellipse cx="1010" cy="356" rx="700" ry="165" fill="url(#dawn)"/>
+    <rect x="0" y="0" width="1440" height="460" fill="url(#skyS)"/>
+    <ellipse cx="1180" cy="352" rx="720" ry="180" fill="url(#glowS)"/>
 
-    <!-- stars, fading as the sky lightens -->
-    <g fill="#dff1ff" opacity=".55">
-      <circle cx="120" cy="52" r="1.5" opacity=".8"/><circle cx="243" cy="96" r="1.1" opacity=".5"/>
-      <circle cx="352" cy="44" r="1.3" opacity=".65"/><circle cx="470" cy="86" r="1" opacity=".4"/>
-      <circle cx="600" cy="38" r="1.4" opacity=".7"/><circle cx="712" cy="72" r="1" opacity=".45"/>
-      <circle cx="836" cy="46" r="1.2" opacity=".6"/><circle cx="958" cy="92" r="1" opacity=".4"/>
-      <circle cx="1090" cy="40" r="1.4" opacity=".7"/><circle cx="1214" cy="78" r="1.1" opacity=".5"/>
-      <circle cx="1330" cy="50" r="1.3" opacity=".6"/><circle cx="60" cy="104" r="1" opacity=".35"/>
+    <!-- a few early stars, barely there -->
+    <g fill="#ffe9d6" opacity=".28">
+      <circle cx="120" cy="52" r="1.5"/><circle cx="243" cy="96" r="1.1"/>
+      <circle cx="352" cy="44" r="1.3"/><circle cx="470" cy="86" r="1"/>
+      <circle cx="600" cy="38" r="1.4"/><circle cx="712" cy="72" r="1"/>
+      <circle cx="836" cy="46" r="1.2"/><circle cx="958" cy="92" r="1"/>
     </g>
 
+    <!-- the sun, going down into the Atlantic past Signal Hill -->
+    <circle cx="1352" cy="330" r="96" fill="url(#sunS)" opacity=".16" filter="url(#softS)"/>
+    <circle cx="1352" cy="330" r="42" fill="url(#sunS)"/>
+
     <!-- birds -->
-    <g stroke="#1d4152" stroke-width="2" fill="none" stroke-linecap="round" opacity=".85">
+    <g stroke="#4a2036" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9">
       <g class="bird b1"><path d="M0 0 q5 -5 10 0 q5 -5 10 0"/></g>
       <g class="bird b2"><path d="M0 0 q4 -4 8 0 q4 -4 8 0"/></g>
       <g class="bird b3"><path d="M0 0 q3.5 -3.5 7 0 q3.5 -3.5 7 0"/></g>
     </g>
 
-    <!-- far ridge, hazy -->
-    <path d="M0 372 L70 358 L150 344 L232 328 L300 296 L340 270 L374 246 L404 218 L424 212 L648 209 L900 207 L932 228 L982 270 L1032 294 L1072 278 L1102 252 L1132 246 L1172 294 L1244 320 L1344 342 L1440 358 L1440 372 Z"
-          fill="#0f3243" opacity=".9"/>
+    <!-- far ridge, hazy and warmer with distance -->
+    <path d="M0 372 L70 358 L150 344 L232 328 L300 296 L340 270 L374 246 L404 218 L424 212 L648 209 L900 207 L932 228 L982 270 L1032 294 L1072 278 L1102 252 L1132 246 L1172 294 L1244 320 L1288 340 L1288 372 Z"
+          fill="#6b2a44" opacity=".72"/>
 
-    <!-- Table Mountain: Devil's Peak, the flat plateau, Lion's Head, Signal Hill -->
+    <!-- Devil's Peak · the flat top · Lion's Head · Signal Hill, down to the water -->
     <path d="M0 368 L62 352 L122 340 L196 322 L248 300 L286 262 L306 236 L323 258 L357 240 L383 214 L397 202 L412 199
              L888 197 L905 210 L921 248 L960 274 L1004 296 L1044 310 L1082 268 L1102 244 L1119 230 L1137 250 L1163 288
-             L1207 308 L1289 328 L1373 342 L1440 350 L1440 372 L0 372 Z"
-          fill="#061622"/>
+             L1207 308 L1262 330 L1288 344 L1290 372 L0 372 Z"
+          fill="#2a0f1c"/>
 
-    <!-- rim light: the edge that makes the flat top read as Table Mountain -->
-    <g fill="none" stroke="#6fa8b6" stroke-linecap="round">
-      <path d="M412 199 L888 197" stroke-width="1.5" opacity=".5"/>
-      <path d="M397 202 L412 199" stroke-width="1.2" opacity=".34"/>
-      <path d="M888 197 L905 210 L921 248" stroke-width="1.2" opacity=".3"/>
+    <!-- gold rim light along the edges facing the sun -->
+    <g fill="none" stroke="#ffd9a0" stroke-linecap="round">
+      <path d="M412 199 L888 197" stroke-width="1.6" opacity=".55"/>
+      <path d="M397 202 L412 199" stroke-width="1.2" opacity=".36"/>
+      <path d="M888 197 L905 210 L921 248" stroke-width="1.3" opacity=".34"/>
       <path d="M286 262 L306 236 L323 258" stroke-width="1.1" opacity=".3"/>
       <path d="M357 240 L383 214 L397 202" stroke-width="1.1" opacity=".28"/>
     </g>
-    <g fill="none" stroke="#e0975a" stroke-linecap="round">
-      <path d="M1102 244 L1119 230 L1137 250" stroke-width="1.1" opacity=".42"/>
-      <path d="M1137 250 L1163 288" stroke-width="1" opacity=".3"/>
+    <g fill="none" stroke="#ff9f5a" stroke-linecap="round">
+      <path d="M1102 244 L1119 230 L1137 250" stroke-width="1.2" opacity=".55"/>
+      <path d="M1137 250 L1163 288 L1207 308" stroke-width="1.1" opacity=".4"/>
+      <path d="M1004 296 L1044 310 L1082 268" stroke-width="1" opacity=".3"/>
     </g>
 
-    <!-- tablecloth spilling over the plateau -->
-    <g fill="#cfe6f0" filter="url(#soft)" class="cloth">
-      <ellipse cx="430" cy="206" rx="120" ry="15" opacity=".13"/>
-      <ellipse cx="520" cy="220" rx="150" ry="13" opacity=".10"/>
-      <ellipse cx="360" cy="196" rx="80" ry="11" opacity=".11"/>
-      <ellipse cx="612" cy="212" rx="110" ry="10" opacity=".07"/>
+    <!-- tablecloth, lit pink by the low sun -->
+    <g fill="#ffe0cf" filter="url(#softS)" class="cloth">
+      <ellipse cx="430" cy="206" rx="120" ry="15" opacity=".16"/>
+      <ellipse cx="520" cy="220" rx="150" ry="13" opacity=".12"/>
+      <ellipse cx="360" cy="196" rx="80" ry="11" opacity=".13"/>
+      <ellipse cx="612" cy="212" rx="110" ry="10" opacity=".09"/>
     </g>
 
-    <!-- sea -->
-    <rect x="0" y="352" width="1440" height="108" fill="url(#seaG)"/>
-    <!-- dawn light on the water -->
-    <path d="M895 352 L1125 352 L1190 460 L835 460 Z" fill="url(#reflect)" filter="url(#soft2)" opacity=".75"/>
-    <!-- horizon line -->
-    <rect x="0" y="351" width="1440" height="1.6" fill="#a8dbe4" opacity=".34"/>
-    <!-- Robben Island, low on the left -->
-    <path d="M126 352 q34 -11 74 -7 q40 4 62 7 Z" fill="#07151f" opacity=".9"/>
-    <!-- swell -->
-    <g stroke="#8fd4dc" stroke-linecap="round" class="swell">
-      <path d="M40 374 h86" stroke-width="1.6" opacity=".16"/>
-      <path d="M186 386 h58" stroke-width="1.4" opacity=".12"/>
-      <path d="M320 372 h120" stroke-width="1.6" opacity=".14"/>
-      <path d="M470 392 h74" stroke-width="1.3" opacity=".11"/>
-      <path d="M596 376 h150" stroke-width="1.7" opacity=".15"/>
-      <path d="M760 398 h64" stroke-width="1.2" opacity=".10"/>
-      <path d="M1180 380 h120" stroke-width="1.6" opacity=".14"/>
-      <path d="M1300 396 h96" stroke-width="1.3" opacity=".11"/>
-      <path d="M1010 412 h160" stroke-width="1.8" opacity=".13"/>
-      <path d="M220 424 h130" stroke-width="1.5" opacity=".10"/>
-      <path d="M640 432 h180" stroke-width="1.6" opacity=".10"/>
-      <path d="M1240 424 h110" stroke-width="1.4" opacity=".09"/>
+    <!-- the bay -->
+    <rect x="0" y="352" width="1440" height="108" fill="url(#seaS)"/>
+    <path d="M1284 352 L1420 352 L1440 460 L1240 460 Z" fill="url(#reflectS)" filter="url(#softS)" opacity=".62"/>
+    <path d="M0 352 L1440 352 L1440 372 L0 372 Z" fill="#ff9d5c" opacity=".14" filter="url(#softS2)"/>
+    <rect x="0" y="351" width="1440" height="1.6" fill="#ffe0b0" opacity=".42"/>
+    <path d="M126 352 q34 -11 74 -7 q40 4 62 7 Z" fill="#2a1020" opacity=".9"/>
+    <g stroke="#ffc48f" stroke-linecap="round" class="swell">
+      <path d="M40 374 h86" stroke-width="1.6" opacity=".2"/>
+      <path d="M186 386 h58" stroke-width="1.4" opacity=".15"/>
+      <path d="M320 372 h120" stroke-width="1.6" opacity=".18"/>
+      <path d="M470 392 h74" stroke-width="1.3" opacity=".14"/>
+      <path d="M596 376 h150" stroke-width="1.7" opacity=".19"/>
+      <path d="M760 398 h64" stroke-width="1.2" opacity=".13"/>
+      <path d="M1180 380 h120" stroke-width="1.6" opacity=".22"/>
+      <path d="M1300 396 h96" stroke-width="1.3" opacity=".2"/>
+      <path d="M1010 412 h160" stroke-width="1.8" opacity=".16"/>
+      <path d="M220 424 h130" stroke-width="1.5" opacity=".13"/>
+      <path d="M640 432 h180" stroke-width="1.6" opacity=".12"/>
+      <path d="M1240 424 h110" stroke-width="1.4" opacity=".18"/>
     </g>
-    <!-- bottom blend into the page -->
-    <rect x="0" y="386" width="1440" height="74" fill="url(#fadeBot)"/>
+    <!-- glitter path under the sun -->
+    <g stroke="#fff0cf" stroke-linecap="round" stroke-width="2.4" class="glitter">
+      <path d="M1300 366 h60" opacity=".5"/><path d="M1320 380 h44" opacity=".42"/>
+      <path d="M1290 394 h54" opacity=".34"/><path d="M1330 408 h38" opacity=".28"/>
+      <path d="M1306 422 h46" opacity=".22"/>
+    </g>
+    <rect x="0" y="386" width="1440" height="74" fill="url(#fadeS)"/>
   </svg>
 
 
@@ -358,89 +370,101 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
   <svg class="scene scene-tall" viewBox="0 0 720 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="skyT" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#030c17"/>
-        <stop offset="28%"  stop-color="#072031"/>
-        <stop offset="48%"  stop-color="#114050"/>
-        <stop offset="60%"  stop-color="#2b6b77"/>
-        <stop offset="66%"  stop-color="#7e9389"/>
-        <stop offset="69%"  stop-color="#d99a63"/>
-        <stop offset="73%"  stop-color="#e8b57e"/>
-        <stop offset="100%" stop-color="#3d6a72"/>
+        <stop offset="0%"   stop-color="#2b0c2e"/>
+        <stop offset="22%"  stop-color="#4a123a"/>
+        <stop offset="44%"  stop-color="#7c2244"/>
+        <stop offset="60%"  stop-color="#b8443c"/>
+        <stop offset="73%"  stop-color="#e06f3f"/>
+        <stop offset="85%"  stop-color="#f4a25c"/>
+        <stop offset="94%"  stop-color="#ffd08a"/>
+        <stop offset="100%" stop-color="#ffeec4"/>
       </linearGradient>
-      <radialGradient id="dawnT" cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0%"   stop-color="#ffc089" stop-opacity=".8"/>
-        <stop offset="50%"  stop-color="#f0913f" stop-opacity=".22"/>
-        <stop offset="100%" stop-color="#f0913f" stop-opacity="0"/>
+      <radialGradient id="sunT" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%"   stop-color="#fff8e2"/>
+        <stop offset="42%"  stop-color="#ffd88f"/>
+        <stop offset="100%" stop-color="#ff9d5c"/>
+      </radialGradient>
+      <radialGradient id="glowT" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%"   stop-color="#ffb877" stop-opacity=".6"/>
+        <stop offset="50%"  stop-color="#ff7e4a" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#ff7e4a" stop-opacity="0"/>
       </radialGradient>
       <linearGradient id="seaT" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#17434f"/>
-        <stop offset="16%"  stop-color="#0a2431"/>
-        <stop offset="100%" stop-color="#030e17"/>
+        <stop offset="0%"   stop-color="#c2704a"/>
+        <stop offset="16%"  stop-color="#7e3644"/>
+        <stop offset="50%"  stop-color="#4a1c2c"/>
+        <stop offset="100%" stop-color="#1c0b14"/>
       </linearGradient>
       <linearGradient id="reflectT" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#ffb271" stop-opacity=".5"/>
-        <stop offset="55%"  stop-color="#ffb271" stop-opacity=".13"/>
-        <stop offset="100%" stop-color="#ffb271" stop-opacity="0"/>
+        <stop offset="0%"   stop-color="#ffdca6" stop-opacity=".66"/>
+        <stop offset="55%"  stop-color="#ffb877" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#ffb877" stop-opacity="0"/>
       </linearGradient>
       <linearGradient id="fadeT" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#050e16" stop-opacity="0"/>
-        <stop offset="100%" stop-color="#050e16" stop-opacity="1"/>
+        <stop offset="0%" stop-color="#14080f" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#14080f" stop-opacity="1"/>
       </linearGradient>
       <filter id="softT"><feGaussianBlur stdDeviation="6"/></filter>
       <filter id="softT2"><feGaussianBlur stdDeviation="2.4"/></filter>
     </defs>
 
     <rect x="0" y="0" width="720" height="460" fill="url(#skyT)"/>
-    <ellipse cx="520" cy="300" rx="330" ry="118" fill="url(#dawnT)"/>
+    <ellipse cx="640" cy="300" rx="330" ry="130" fill="url(#glowT)"/>
 
-    <g fill="#dff1ff" opacity=".5">
-      <circle cx="60" cy="40" r="1.6" opacity=".7"/><circle cx="150" cy="70" r="1.2" opacity=".5"/>
-      <circle cx="255" cy="30" r="1.4" opacity=".6"/><circle cx="360" cy="62" r="1.1" opacity=".45"/>
-      <circle cx="470" cy="34" r="1.5" opacity=".6"/><circle cx="580" cy="66" r="1.2" opacity=".45"/>
-      <circle cx="660" cy="28" r="1.2" opacity=".5"/><circle cx="105" cy="104" r="1.1" opacity=".35"/>
+    <g fill="#ffe9d6" opacity=".3">
+      <circle cx="60" cy="40" r="1.5"/><circle cx="150" cy="70" r="1.2"/>
+      <circle cx="255" cy="30" r="1.4"/><circle cx="360" cy="62" r="1.1"/>
+      <circle cx="120" cy="108" r="1"/>
     </g>
+
+    <!-- sun going down beyond the mountain -->
+    <circle cx="656" cy="282" r="62" fill="url(#sunT)" opacity=".18" filter="url(#softT)"/>
+    <circle cx="656" cy="282" r="26" fill="url(#sunT)"/>
 
     <!-- far ridge -->
-    <path d="M0 306 L40 292 L86 274 L124 250 L156 226 L176 206 L214 198 L252 192 L286 190 L520 188 L558 200 L594 224 L628 214 L656 202 L676 206 L700 218 L720 232 L720 306 Z"
-          fill="#0f3243" opacity=".9"/>
+    <path d="M0 306 L40 292 L86 274 L124 250 L156 226 L176 206 L214 198 L252 192 L286 190 L520 188 L558 200 L594 224 L616 250 L622 306 Z"
+          fill="#6b2a44" opacity=".72"/>
 
-    <!-- Devil's Peak · the flat top · Lion's Head · Signal Hill -->
+    <!-- Devil's Peak · the flat top · Lion's Head, running down to the water -->
     <path d="M0 300 L40 272 L86 246 L124 214 L156 186 L172 170 L186 190 L214 176 L236 156 L248 144
-             L520 141 L536 152 L552 186 L582 214 L612 228 L648 196 L668 178 L682 172 L694 190 L710 206
-             L720 214 L720 300 Z"
-          fill="#061622"/>
+             L520 141 L536 152 L552 186 L578 212 L596 238 L610 262 L616 282 L617 300 Z"
+          fill="#2a0f1c"/>
 
-    <g fill="none" stroke="#6fa8b6" stroke-linecap="round">
-      <path d="M248 144 L520 141" stroke-width="1.6" opacity=".5"/>
-      <path d="M236 156 L248 144" stroke-width="1.3" opacity=".34"/>
-      <path d="M520 141 L536 152 L552 186" stroke-width="1.3" opacity=".3"/>
+    <g fill="none" stroke="#ffd9a0" stroke-linecap="round">
+      <path d="M248 144 L520 141" stroke-width="1.6" opacity=".55"/>
+      <path d="M236 156 L248 144" stroke-width="1.3" opacity=".36"/>
+      <path d="M520 141 L536 152 L552 186" stroke-width="1.3" opacity=".34"/>
       <path d="M156 186 L172 170 L186 190" stroke-width="1.2" opacity=".3"/>
     </g>
-    <g fill="none" stroke="#e0975a" stroke-linecap="round">
-      <path d="M668 178 L682 172 L694 190" stroke-width="1.2" opacity=".46"/>
+    <g fill="none" stroke="#ff9f5a" stroke-linecap="round">
+      <path d="M552 186 L578 212 L596 238" stroke-width="1.2" opacity=".45"/>
     </g>
 
-    <g fill="#cfe6f0" filter="url(#softT)" class="cloth">
-      <ellipse cx="292" cy="150" rx="58" ry="8" opacity=".14"/>
-      <ellipse cx="348" cy="161" rx="74" ry="7" opacity=".1"/>
-      <ellipse cx="236" cy="142" rx="40" ry="6" opacity=".11"/>
+    <g fill="#ffe0cf" filter="url(#softT)" class="cloth">
+      <ellipse cx="292" cy="150" rx="58" ry="8" opacity=".16"/>
+      <ellipse cx="348" cy="161" rx="74" ry="7" opacity=".12"/>
+      <ellipse cx="236" cy="142" rx="40" ry="6" opacity=".13"/>
     </g>
 
     <!-- the bay -->
     <rect x="0" y="300" width="720" height="160" fill="url(#seaT)"/>
-    <path d="M430 300 L610 300 L648 460 L392 460 Z" fill="url(#reflectT)" filter="url(#softT)" opacity=".5"/>
-    <rect x="0" y="299" width="720" height="1.6" fill="#a8dbe4" opacity=".34"/>
-    <path d="M40 300 q28 -8 62 -5 q30 3 50 5 Z" fill="#07151f" opacity=".9"/>
-    <g stroke="#8fd4dc" stroke-linecap="round" class="swell">
+    <path d="M600 300 L706 300 L720 460 L582 460 Z" fill="url(#reflectT)" filter="url(#softT)" opacity=".6"/>
+    <rect x="0" y="299" width="720" height="1.6" fill="#ffe0b0" opacity=".42"/>
+    <path d="M40 300 q28 -8 62 -5 q30 3 50 5 Z" fill="#2a1020" opacity=".9"/>
+    <g stroke="#ffc48f" stroke-linecap="round" class="swell">
       <path d="M24 314 h70" stroke-width="1.7" opacity=".22"/>
       <path d="M132 330 h54" stroke-width="1.4" opacity=".16"/>
       <path d="M268 318 h92" stroke-width="1.7" opacity=".19"/>
       <path d="M430 346 h62" stroke-width="1.3" opacity=".15"/>
-      <path d="M548 316 h88" stroke-width="1.6" opacity=".18"/>
+      <path d="M470 316 h88" stroke-width="1.6" opacity=".18"/>
       <path d="M78 364 h116" stroke-width="1.6" opacity=".15"/>
       <path d="M318 384 h104" stroke-width="1.5" opacity=".14"/>
-      <path d="M498 406 h126" stroke-width="1.7" opacity=".14"/>
+      <path d="M470 406 h126" stroke-width="1.7" opacity=".18"/>
       <path d="M150 428 h146" stroke-width="1.6" opacity=".12"/>
+    </g>
+    <g stroke="#fff0cf" stroke-linecap="round" stroke-width="2.2" class="glitter">
+      <path d="M614 318 h48" opacity=".5"/><path d="M632 334 h36" opacity=".4"/>
+      <path d="M604 350 h44" opacity=".32"/><path d="M636 368 h30" opacity=".24"/>
     </g>
     <rect x="0" y="392" width="720" height="68" fill="url(#fadeT)"/>
   </svg>
@@ -558,6 +582,10 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
 /* scene motion: slow, and it stops for reduced-motion */
 .cloth{animation:cloth 26s ease-in-out infinite alternate}
 @keyframes cloth{from{transform:translateX(-14px)}to{transform:translateX(22px)}}
+.glitter path{animation:glitter 4.4s ease-in-out infinite alternate}
+.glitter path:nth-child(2n){animation-duration:5.8s;animation-delay:-1.7s}
+.glitter path:nth-child(3n){animation-duration:3.6s;animation-delay:-2.5s}
+@keyframes glitter{from{opacity:.12}to{opacity:.62}}
 .swell path{animation:swell 7s ease-in-out infinite alternate}
 .swell path:nth-child(2n){animation-duration:9s;animation-delay:-3s}
 .swell path:nth-child(3n){animation-duration:11s;animation-delay:-5s}
