@@ -26,7 +26,7 @@ Trip: JNB → CPT Fri 23 Oct 2026 06:30, home Mon 26 Oct 2026 17:00 (LIFT 17:00 
     ".read": false,
     ".write": false,
     "trips": {
-      "cpt-oct26-k7q4m2": {
+      "<your-trip-code>": {
         ".read": true,
         ".write": true
       }
@@ -37,13 +37,14 @@ Trip: JNB → CPT Fri 23 Oct 2026 06:30, home Mon 26 Oct 2026 17:00 (LIFT 17:00 
 
 4. Copy the database URL shown at the top of the Data tab. It looks like
    `https://<project>-default-rtdb.europe-west1.firebasedatabase.app`
-5. Open the checklist → **⚙︎ Sync** → paste that URL → trip code `cpt-oct26-k7q4m2` → **Save & sync**.
+5. Open the checklist → **⚙︎ Sync** → paste that URL → the trip code you were given → **Save & sync**.
+   (The code is deliberately not committed to this public repo — it is half of the lock.)
 6. Send your partner the same page link and the same two values. She does step 5 once.
 
 ### What the security actually is
 
 - The `apiKey`/config being visible is normal in any web app; it is not the lock.
-- The lock is the rules above: read/write is allowed **only** at `/trips/cpt-oct26-k7q4m2`. Everything else is denied.
+- The lock is the rules above: read/write is allowed **only** at `/trips/<your-trip-code>`. Everything else is denied.
 - So access needs the database URL **and** that code. Treat the pair like a private link.
 - To go further, add Firebase **Authentication → Email/Password** for exactly two addresses and change the rule to
   `".read": "auth.token.email === 'you@example.com' || auth.token.email === 'partner@example.com'"`. Then a leaked link is useless on its own.
