@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f16">
+<title>Cape Town · our checklist</title>
+<style>
+:root{
+  --bg:#080b11; --panel:#111722; --panel2:#0d1320; --line:#243040;
+  --fg:#e8eef7; --muted:#8b9bb0; --accent:#58a6ff; --good:#3fb950;
+  --warn:#d29922; --bad:#f85149; --me:#58a6ff; --them:#ff7ab6;
+  --r:14px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(1100px 600px at 80% -10%, #14253c 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #1a1430 0%, transparent 55%),
+    var(--bg);
+  color:var(--fg); min-height:100vh;
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding:0 0 96px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:18px 16px 0}
+
+/* ---------- header ---------- */
+.head{padding:10px 0 4px}
+.kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:800}
+h1{font-size:26px;margin:6px 0 2px;letter-spacing:-.4px;user-select:none}
+.sub{color:var(--muted);font-size:13.5px}
+
+/* ---------- countdown ---------- */
+.cd{
+  margin-top:16px;background:linear-gradient(180deg,#111a27,#0b1220);
+  border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 14px;
+  position:relative;overflow:hidden;
+}
+.cd:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(400px 120px at 20% 0%, rgba(88,166,255,.13), transparent 70%);
+}
+.cd .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.cd .grid{display:flex;gap:8px;margin-top:10px;align-items:baseline}
+.cd .u{flex:1;text-align:center;background:#0a1018;border:1px solid #1b2534;border-radius:11px;padding:9px 4px}
+.cd .n{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-1px;line-height:1}
+.cd .c{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.cd .mini{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+.cd .mini b{color:var(--fg);font-variant-numeric:tabular-nums}
+.cd.soon .n{color:var(--warn)}
+.cd.imminent .n{color:var(--bad)}
+
+/* ---------- who am i ---------- */
+.who{display:flex;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.chip{
+  border:1px solid var(--line);background:#0d1521;color:var(--muted);
+  border-radius:999px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;
+}
+.chip.on{color:#04121f;background:var(--accent);border-color:var(--accent)}
+.chip.on.them{background:var(--them);border-color:var(--them);color:#1c0714}
+.chip.tiny{padding:5px 10px;font-size:11.5px}
+
+/* ---------- overall bar ---------- */
+.barwrap{margin-top:16px}
+.bar{height:9px;background:#132030;border-radius:99px;overflow:hidden;border:1px solid #1b2838}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f81f7,#3fb950);transition:width .45s ease}
+.barmeta{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:var(--muted)}
+.barmeta b{color:var(--fg)}
+
+/* ---------- sections ---------- */
+section{margin-top:20px;background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.shead{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;background:#0f1622;border-bottom:1px solid var(--line)}
+.shead .ic{font-size:17px;width:22px;text-align:center}
+.shead .nm{font-weight:700;font-size:14.5px;flex:1}
+.shead .cnt{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.shead .ring{width:26px;height:26px;flex:0 0 26px}
+.sbody{padding:4px 6px 8px}
+section.collapsed .sbody{display:none}
+
+/* ---------- item ---------- */
+.it{display:flex;align-items:flex-start;gap:11px;padding:10px 9px;border-radius:10px;cursor:pointer}
+.it:active{background:#131c29}
+.it+.it{border-top:1px solid #172130}
+.box{
+  flex:0 0 22px;width:22px;height:22px;margin-top:1px;border-radius:7px;
+  border:2px solid #35455c;display:grid;place-items:center;transition:.15s;background:#0b1220;
+}
+.box svg{width:13px;height:13px;opacity:0;transform:scale(.6);transition:.15s}
+.it.done .box{background:var(--good);border-color:var(--good)}
+.it.done .box svg{opacity:1;transform:scale(1)}
+.it .txt{flex:1;min-width:0}
+.it .t{font-size:14.5px;word-break:break-word}
+.it.done .t{color:#6f7f93;text-decoration:line-through;text-decoration-thickness:1.5px}
+.it .meta{font-size:11px;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.it .who-pill{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:2px 7px;border:1px solid}
+.w-a{color:var(--me);border-color:#22384f}
+.w-b{color:var(--them);border-color:#42223a}
+.w-both{color:var(--muted);border-color:#26313f}
+.it .del{
+  border:none;background:transparent;color:#3d4c5f;font-size:16px;padding:2px 4px;cursor:pointer;line-height:1;
+}
+.it .del:hover{color:var(--bad)}
+
+/* ---------- add ---------- */
+.add{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.addRow{display:flex;gap:8px}
+input[type=text],select{
+  background:#0a1018;border:1px solid #1e2a3a;color:var(--fg);border-radius:10px;
+  padding:11px 12px;font-size:14.5px;font-family:inherit;min-width:0;
+}
+input[type=text]{flex:1}
+input[type=text]:focus,select:focus{outline:none;border-color:var(--accent)}
+.btn{
+  border:none;border-radius:10px;padding:11px 16px;font-weight:800;font-size:14px;
+  background:var(--accent);color:#04121f;cursor:pointer;font-family:inherit;
+}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:#182231;color:var(--fg);border:1px solid var(--line)}
+.addRow2{display:flex;gap:8px;margin-top:8px;align-items:center}
+.addRow2 select{flex:1;font-size:13px;padding:9px 10px}
+
+/* ---------- footer / sync ---------- */
+.foot{margin-top:26px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:99px;display:inline-block;margin-right:6px;background:#4a5a6e}
+.dot.ok{background:var(--good);box-shadow:0 0 8px rgba(63,185,80,.7)}
+.dot.local{background:var(--warn)}
+.dot.err{background:var(--bad)}
+.linkish{color:var(--accent);cursor:pointer;font-weight:700}
+
+/* ---------- settings sheet ---------- */
+.sheet{position:fixed;inset:0;background:rgba(4,7,12,.72);backdrop-filter:blur(4px);display:none;z-index:60;align-items:flex-end}
+.sheet.open{display:flex}
+.sheet .card{
+  background:var(--panel);border:1px solid var(--line);border-radius:18px 18px 0 0;
+  width:100%;max-width:720px;margin:0 auto;padding:18px 18px 26px;max-height:88vh;overflow:auto;
+}
+.sheet h3{margin:0 0 4px;font-size:17px}
+.sheet p{color:var(--muted);font-size:13px;margin:6px 0 12px}
+.sheet .row{display:flex;gap:8px;margin-top:10px}
+.sheet .row input{flex:1}
+.hint{font-size:11.5px;color:#6d7d91;margin-top:8px;line-height:1.55}
+code{background:#0a1018;border:1px solid #1e2a3a;border-radius:6px;padding:1px 5px;font-size:12px;color:#9fd0ff}
+
+/* ---------- toast ---------- */
+#toasts{position:fixed;left:0;right:0;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:80;pointer-events:none}
+.toast{
+  background:#152030;border:1px solid #2a3a4f;color:var(--fg);border-radius:12px;
+  padding:10px 15px;font-size:13.5px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5);
+  max-width:90vw;animation:tin .3s ease both;
+}
+@keyframes tin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ---------- easter eggs ---------- */
+#plane,#car{position:fixed;font-size:44px;z-index:90;pointer-events:none;opacity:0}
+#plane{top:16%;left:-80px}
+#car{bottom:26px;left:-90px}
+.fly{animation:fly 3.4s linear forwards}
+@keyframes fly{
+  0%{opacity:1;left:-80px;transform:rotate(-6deg)}
+  100%{opacity:1;left:110%;transform:rotate(-6deg)}
+}
+.drive{animation:drive 3.2s linear forwards}
+@keyframes drive{
+  0%{opacity:1;left:-90px}
+  100%{opacity:1;left:110%}
+}
+.pass{
+  position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  background:rgba(4,7,12,.82);padding:18px;
+}
+.pass.open{display:flex}
+.pass .ticket{
+  width:100%;max-width:380px;background:linear-gradient(160deg,#12283f,#0b1622);
+  border:1px solid #2b4a6b;border-radius:18px;padding:22px;text-align:center;
+  box-shadow:0 24px 70px rgba(0,0,0,.6);position:relative;overflow:hidden;
+  animation:pop .5s cubic-bezier(.2,1.4,.4,1) both;
+}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.pass .ticket:before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(300px 120px at 50% -10%, rgba(88,166,255,.28), transparent 70%);
+}
+.pass .big{font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:800}
+.pass .seat{font-size:58px;font-weight:900;letter-spacing:-2px;margin:10px 0 2px}
+.pass .tiny{font-size:12px;color:var(--muted)}
+.pass button{margin-top:16px}
+#confetti{position:fixed;inset:0;z-index:99;pointer-events:none}
+@media (max-width:400px){
+  .cd .n{font-size:25px}
+  h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="kicker">JNB ⇄ CPT · 23–26 Oct 2026</div>
+    <h1 id="title">Cape Town, here we come ✈️</h1>
+    <div class="sub" id="subline">Everything we still need to sort before we fly.</div>
+  </div>
+
+  <!-- countdown -->
+  <div class="cd" id="cd">
+    <div class="lbl" id="cdLabel">Wheels up in</div>
+    <div class="grid">
+      <div class="u"><div class="n" id="cdD">--</div><div class="c">days</div></div>
+      <div class="u"><div class="n" id="cdH">--</div><div class="c">hours</div></div>
+      <div class="u"><div class="n" id="cdM">--</div><div class="c">mins</div></div>
+      <div class="u"><div class="n" id="cdS">--</div><div class="c">secs</div></div>
+    </div>
+    <div class="mini" id="cdMini"></div>
+  </div>
+
+  <div class="who" id="who">
+    <span style="font-size:12px;color:var(--muted)">I am</span>
+    <button class="chip tiny" data-who="a">Me</button>
+    <button class="chip tiny" data-who="b">Partner</button>
+    <span style="flex:1"></span>
+    <button class="chip tiny" id="openSettings">⚙︎ Sync</button>
+  </div>
+
+  <div class="barwrap">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="barmeta">
+      <span><b id="doneCount">0</b> of <b id="allCount">0</b> packed &amp; sorted</span>
+      <span id="pct">0%</span>
+    </div>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="add">
+    <div class="addRow">
+      <input type="text" id="newItem" placeholder="Add something to remember…" autocomplete="off" enterkeyhint="done">
+      <button class="btn" id="addBtn">Add</button>
+    </div>
+    <div class="addRow2">
+      <select id="newCat"></select>
+      <select id="newWho">
+        <option value="both">Both of us</option>
+        <option value="a">Me</option>
+        <option value="b">Partner</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span id="syncState"><span class="dot local"></span>Saved on this device</span>
+    <span class="linkish" id="exportLink">Backup / restore</span>
+  </div>
+</div>
+
+<div id="toasts"></div>
+<div id="plane">✈️</div>
+<div id="car">🚗</div>
+<canvas id="confetti"></canvas>
+
+<div class="pass" id="passModal">
+  <div class="ticket">
+    <div class="big">Boarding pass</div>
+    <div class="seat" id="passSeat">14A</div>
+    <div class="tiny" id="passLine">Everything on the list is done. You two are dangerous.</div>
+    <button class="btn" id="passClose">Nice</button>
+  </div>
+</div>
+
+<div class="sheet" id="settings">
+  <div class="card">
+    <h3>Sync between phones</h3>
+    <p>Without this, the list lives only on this device. Paste your Firebase Realtime Database URL to share it — both of you enter the <b>same trip code</b>.</p>
+    <div class="row">
+      <input type="text" id="fbUrl" placeholder="https://your-project-default-rtdb.firebaseio.com">
+    </div>
+    <div class="row">
+      <input type="text" id="tripCode" placeholder="shared trip code">
+    </div>
+    <div class="row">
+      <button class="btn" id="saveCfg">Save &amp; sync</button>
+      <button class="btn ghost" id="clearCfg">Turn off</button>
+    </div>
+    <div class="hint">
+      Rules I set for you allow read/write only under
+      <code>/trips/&lt;your-code&gt;</code>. Keep the code private — it is the lock,
+      together with your database URL. Nothing sensitive belongs in this list.
+    </div>
+    <h3 style="margin-top:22px">Names</h3>
+    <p>So ticks show who did what.</p>
+    <div class="row">
+      <input type="text" id="nameA" placeholder="Your name" maxlength="14">
+      <input type="text" id="nameB" placeholder="Partner's name" maxlength="14">
+    </div>
+    <div class="row"><button class="btn" id="saveNames">Save names</button></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   Trip checklist — local-first, optional Firebase Realtime Database sync.
+   No frameworks, no build step, no SDK: Firebase is plain REST.
+   ===================================================================== */
+const TRIP = {
+  departISO: "2026-10-23T06:30:00+02:00",   // LIFT 06:30 JNB → CPT
+  carISO:    "2026-10-23T10:00:00+02:00",   // car pickup window
+  backISO:   "2026-10-26T17:00:00+02:00",   // LIFT 17:00 CPT → JNB
+};
+
+const CATS = [
+  {id:"docs",  ic:"🛂", nm:"Documents & bookings"},
+  {id:"bags",  ic:"🎒", nm:"Bags & clothing"},
+  {id:"tech",  ic:"🔌", nm:"Tech & chargers"},
+  {id:"car",   ic:"🚗", nm:"Car & driving"},
+  {id:"plans", ic:"🗺️", nm:"Plans & bookings"},
+  {id:"misc",  ic:"✨", nm:"Bits & bobs"},
+];
+
+/* seeded from the actual trip research — baggage rules, car excess, etc. */
+const SEED = [
+  ["ID book / driver's licence (physical card, not a photo)", "docs", "both"],
+  ["Flight confirmation saved offline (screenshot or PDF)", "docs", "both"],
+  ["Car booking voucher + agency's cover tier confirmed", "docs", "both"],
+  ["Bank card for the car deposit hold (credit, not debit)", "docs", "a"],
+  ["Travel insurance details, if we took it", "docs", "both"],
+  ["Checked bag: 20 kg if FlySafair Lite, 23 kg on LIFT / SAA", "bags", "both"],
+  ["Carry-on within 7 kg if we're on a Lite fare", "bags", "both"],
+  ["Warm layer + windbreaker (Cape wind is no joke)", "bags", "both"],
+  ["Swimming stuff, even if the sea is freezing", "bags", "both"],
+  ["Comfortable walking shoes", "bags", "both"],
+  ["Sunnies, hat, SPF", "bags", "both"],
+  ["Phone chargers + one power bank", "tech", "both"],
+  ["Car phone mount + cable for the rental", "tech", "a"],
+  ["Camera / GoPro + spare cards", "tech", "b"],
+  ["LIFT app installed and account sorted", "tech", "both"],
+  ["Download offline maps for the Winelands + Cape Point", "tech", "a"],
+  ["Check the rental for existing damage before driving off", "car", "a"],
+  ["Photograph the fuel gauge and odometer at pickup", "car", "a"],
+  ["Confirm what the excess actually covers (tyres, glass, undercarriage)", "car", "both"],
+  ["Fuel full-to-full — note the nearest station before return", "car", "a"],
+  ["Return the car by 10:00 Monday or we pay a 4th day", "car", "both"],
+  ["Book Table Mountain cableway (weather-dependent)", "plans", "both"],
+  ["Decide: Cape Point day vs Winelands day", "plans", "both"],
+  ["Dinner booked for the Saturday night", "plans", "b"],
+  ["Check the Monday flight time against car return", "plans", "both"],
+  ["Reorder the actual flights — verify the Fare on the airline site", "misc", "both"],
+  ["Cash for tips and small car parks", "misc", "a"],
+  ["Medication + basic first-aid odds and ends", "misc", "both"],
+  ["Tell someone our itinerary", "misc", "both"],
+];
+
+const LS = {
+  state: "cpt.state.v1",
+  cfg:   "cpt.cfg.v1",
+  who:   "cpt.who.v1",
+  sees:  "cpt.sees.v1",
+};
+
+const $  = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const uid = () => "i" + Math.random().toString(36).slice(2, 9);
+const now = () => Date.now();
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+let state = null;          // {items:{id:{...}}, meta:{}}
+let cfg   = {fbUrl:"", tripCode:""};
+let me    = "a";           // 'a' | 'b'
+let names = {a:"Me", b:"Partner"};
+let remoteOK = false;
+
+/* ------------------------------- state ------------------------------ */
+function blankState(){
+  const items = {};
+  SEED.forEach(([t,c,w]) => { const id = uid(); items[id] = {id, t, c, w, d:0, u:now(), x:0}; });
+  return {items, meta:{created:now()}};
+}
+function load(){
+  try{
+    const raw = localStorage.getItem(LS.state);
+    state = raw ? JSON.parse(raw) : blankState();
+  }catch(e){ state = blankState(); }
+  if(!state.items) state.items = {};
+  try{ cfg = JSON.parse(localStorage.getItem(LS.cfg) || '{"fbUrl":"","tripCode":""}'); }catch(e){ cfg = {fbUrl:"",tripCode:""}; }
+  me = localStorage.getItem(LS.who) || "a";
+  try{ const n = JSON.parse(localStorage.getItem("cpt.names")||"null"); if(n) names = n; }catch(e){}
+  $("#nameA").value = names.a === "Me" ? "" : names.a;
+  $("#nameB").value = names.b === "Partner" ? "" : names.b;
+}
+function save(){ try{ localStorage.setItem(LS.state, JSON.stringify(state)); }catch(e){} }
+/* u = creation stamp (never changes, keeps row order stable under your thumb);
+   uu = last-modified stamp, used for last-write-wins merging */
+function touch(it){ it.uu = now(); save(); }
+
+/* merge two states: union of items, newest write wins per item */
+function merge(a, b){
+  const out = {items:{}, meta:{}};
+  for(const src of [a, b]){
+    if(!src || !src.items) continue;
+    for(const [id, it] of Object.entries(src.items)){
+      const cur = out.items[id];
+      const su = it.uu || it.u || 0;
+      const cu = cur ? (cur.uu || cur.u || 0) : -1;
+      if(su > cu) out.items[id] = Object.assign({}, it);
+    }
+  }
+  out.meta = Object.assign({}, (a&&a.meta)||{}, (b&&b.meta)||{}, {updatedAt: now()});
+  return out;
+}
+
+/* ------------------------------ firebase ---------------------------- */
+function fbBase(){
+  if(!cfg.fbUrl || !cfg.tripCode) return null;
+  return cfg.fbUrl.replace(/\/+$/,"") + "/trips/" + encodeURIComponent(cfg.tripCode.trim().toLowerCase()) + ".json";
+}
+async function fbGet(){
+  const u = fbBase(); if(!u) return null;
+  const r = await fetch(u + "?t=" + now(), {cache:"no-store"});
+  if(!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  return (j && typeof j === "object" && j.items) ? j : null;
+}
+async function fbPut(s){
+  const u = fbBase(); if(!u) return;
+  const r = await fetch(u, {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(s)});
+  if(!r.ok) throw new Error("HTTP " + r.status);
+}
+function setSync(kind, text){
+  const el = $("#syncState");
+  el.innerHTML = '<span class="dot ' + kind + '"></span>' + text;
+}
+let syncing = false;
+async function syncOnce(manual){
+  if(!fbBase()){ setSync("local", "Saved on this device"); remoteOK = false; return; }
+  if(syncing) return;
+  syncing = true;
+  try{
+    const remote = await fbGet();
+    remoteOK = true;
+    let merged = remote ? merge(state, remote) : merge(state, null);
+    const changedLocally = JSON.stringify(merged.items) !== JSON.stringify(state.items);
+    const changedRemotely = !remote || JSON.stringify(merged.items) !== JSON.stringify(remote.items);
+    state = merged;
+    save();
+    if(changedRemotely) await fbPut(state);
+    if(changedLocally) render();
+    setSync("ok", "Synced just now");
+    if(manual) toast("Synced ✓");
+  }catch(e){
+    remoteOK = false;
+    setSync("err", "Sync failed — " + e.message);
+    if(manual) toast("Couldn't sync: " + e.message);
+  }finally{
+    syncing = false;
+  }
+}
+
+/* ------------------------------- render ----------------------------- */
+function ringSVG(pct, col){
+  const r = 10, c = 2*Math.PI*r;
+  return '<svg class="ring" viewBox="0 0 26 26"><circle cx="13" cy="13" r="' + r +
+    '" fill="none" stroke="#22303f" stroke-width="3"/><circle cx="13" cy="13" r="' + r +
+    '" fill="none" stroke="' + col + '" stroke-width="3" stroke-linecap="round" stroke-dasharray="' +
+    c.toFixed(1) + '" stroke-dashoffset="' + (c*(1-pct)).toFixed(1) +
+    '" transform="rotate(-90 13 13)"/></svg>';
+}
+function render(){
+  const items = Object.values(state.items).filter(i => !i.x);
+  const done  = items.filter(i => i.d);
+  const pct   = items.length ? done.length/items.length : 0;
+  $("#barFill").style.width = (pct*100).toFixed(1) + "%";
+  $("#pct").textContent = Math.round(pct*100) + "%";
+  $("#doneCount").textContent = done.length;
+  $("#allCount").textContent = items.length;
+
+  const host = $("#sections");
+  host.innerHTML = CATS.map(cat => {
+    const list = items.filter(i => i.c === cat.id).sort((a,b) => (a.u||0) - (b.u||0));
+    if(!list.length) return "";
+    const d = list.filter(i => i.d).length;
+    const col = d === list.length ? "var(--good)" : "var(--accent)";
+    const collapsed = localStorage.getItem("cpt.closed." + cat.id) === "1" ? " collapsed" : "";
+    return '<section class="' + collapsed.trim() + '" data-cat="' + cat.id + '">' +
+      '<div class="shead" data-toggle="' + cat.id + '">' +
+        '<span class="ic">' + cat.ic + '</span>' +
+        '<span class="nm">' + cat.nm + '</span>' +
+        '<span class="cnt">' + d + "/" + list.length + '</span>' +
+        ringSVG(list.length ? d/list.length : 0, col) +
+      '</div>' +
+      '<div class="sbody">' + list.map(row).join("") + '</div>' +
+    '</section>';
+  }).join("");
+
+  $("#newCat").innerHTML = CATS.map(c => '<option value="' + c.id + '">' + c.ic + "  " + c.nm + '</option>').join("");
+  $$(".chip[data-who]").forEach(b => {
+    b.classList.toggle("on", b.dataset.who === me);
+    b.classList.toggle("them", b.dataset.who === "b");
+    b.textContent = b.dataset.who === "a" ? names.a : names.b;
+  });
+  if(pct === 1 && items.length >= 8) allDone();
+}
+function row(it){
+  const whoLabel = it.w === "both" ? "Both" : (it.w === "a" ? names.a : names.b);
+  const whoCls   = "w-" + it.w;
+  const when = it.d && it.dt ? new Date(it.dt).toLocaleDateString(undefined,{day:"numeric",month:"short"}) : "";
+  return '<div class="it ' + (it.d ? "done" : "") + '" data-id="' + it.id + '">' +
+    '<div class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#04121f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>' +
+    '<div class="txt"><div class="t">' + esc(it.t) + '</div>' +
+      '<div class="meta"><span class="who-pill ' + whoCls + '">' + esc(whoLabel) + '</span>' +
+      (when ? "<span>" + when + "</span>" : "") + '</div>' +
+    '</div>' +
+    '<button class="del" data-del="' + it.id + '" title="Remove">✕</button>' +
+  '</div>';
+}
+
+/* ------------------------------ countdown --------------------------- */
+function tick(){
+  const nowMs = now();
+  const dep = new Date(TRIP.departISO).getTime();
+  const back = new Date(TRIP.backISO).getTime();
+  let target = dep, label = "Wheels up in";
+  if(nowMs > dep){ target = back; label = "Home in"; }
+  if(nowMs > back){ target = null; }
+  $("#cdLabel").textContent = target ? label : "Trip complete";
+  let diff = target ? Math.max(0, target - nowMs) : 0;
+  if(target){
+    const d = Math.floor(diff/86400000);
+    const h = Math.floor(diff%86400000/3600000);
+    const m = Math.floor(diff%3600000/60000);
+    const s = Math.floor(diff%60000/1000);
+    $("#cdD").textContent = d; $("#cdH").textContent = String(h).padStart(2,"0");
+    $("#cdM").textContent = String(m).padStart(2,"0"); $("#cdS").textContent = String(s).padStart(2,"0");
+    $("#cd").classList.toggle("soon", diff < 3*86400000 && diff > 86400000);
+    $("#cd").classList.toggle("imminent", diff <= 86400000);
+    const car = new Date(TRIP.carISO).getTime();
+    const carDiff = car - nowMs;
+    $("#cdMini").innerHTML =
+      "<span>🛫 departs Fri 23 Oct, 06:30</span>" +
+      "<span>🚗 car " + (carDiff > 0
+          ? "in <b>" + Math.floor(carDiff/3600000) + "h " + Math.floor(carDiff%3600000/60000) + "m</b>"
+          : "<b>collected</b>") + "</span>" +
+      "<span>🛬 home Mon 26, 19:00</span>";
+  } else {
+    ["#cdD","#cdH","#cdM","#cdS"].forEach(s => $(s).textContent = "--");
+    $("#cdMini").innerHTML = "<span>Hope it was a good one.</span>";
+  }
+}
+
+/* -------------------------------- toast ----------------------------- */
+function toast(msg, ms){
+  const t = document.createElement("div");
+  t.className = "toast"; t.innerHTML = msg;
+  $("#toasts").appendChild(t);
+  setTimeout(() => { t.style.opacity = "0"; t.style.transition = "opacity .4s"; }, (ms||2400) - 400);
+  setTimeout(() => t.remove(), ms||2400);
+}
+
+/* ------------------------------ easter eggs ------------------------- */
+let seenList = [];
+try{ seenList = JSON.parse(localStorage.getItem(LS.sees) || "[]"); }catch(e){}
+function once(key, fn){
+  if(seenList.includes(key)) return;
+  seenList.push(key);
+  localStorage.setItem(LS.sees, JSON.stringify(seenList));
+  fn();
+}
+function flyPlane(){
+  const p = $("#plane");
+  p.classList.remove("fly"); void p.offsetWidth; p.classList.add("fly");
+}
+function driveCar(){
+  const c = $("#car");
+  c.classList.remove("drive"); void c.offsetWidth; c.classList.add("drive");
+}
+function allDone(){
+  once("alldone", () => {
+    const seats = ["1A","2C","4F","7D","9A","12B","14A","16C","18F","21D"];
+    $("#passSeat").textContent = seats[Math.floor(Math.random()*seats.length)];
+    $("#passLine").textContent = Object.values(state.items).filter(i => !i.x).length +
+      " things, sorted. You two are dangerously organised.";
+    $("#passModal").classList.add("open");
+    confettiBurst();
+  });
+}
+function confettiBurst(){
+  const cv = $("#confetti"), ctx = cv.getContext("2d");
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols = ["#58a6ff","#3fb950","#d29922","#ff7ab6","#a371f7"];
+  const parts = Array.from({length:140}, () => ({
+    x: innerWidth/2 + (Math.random()-0.5)*160,
+    y: innerHeight/2 - 40,
+    vx: (Math.random()-0.5)*11,
+    vy: -Math.random()*13 - 3,
+    s: 3 + Math.random()*5,
+    c: cols[Math.floor(Math.random()*cols.length)],
+    a: Math.random()*Math.PI,
+  }));
+  let frames = 0;
+  (function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.36; p.a += 0.14;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*1.7); ctx.restore();
+    });
+    if(++frames < 170) requestAnimationFrame(loop);
+    else ctx.clearRect(0,0,cv.width,cv.height);
+  })();
+}
+/* konami code */
+const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+let kBuf = [];
+/* typed words */
+let tBuf = "";
+document.addEventListener("keydown", (e) => {
+  kBuf.push(e.key.length === 1 ? e.key.toLowerCase() : e.key);
+  kBuf = kBuf.slice(-KONAMI.length);
+  if(kBuf.join(",") === KONAMI.join(",")){
+    flyPlane();
+    toast("🛫 Cleared for takeoff, captain.");
+    kBuf = [];
+  }
+  if(e.key.length === 1){
+    tBuf = (tBuf + e.key.toLowerCase()).slice(-4);
+    if(tBuf.endsWith("cpt")){ driveCar(); toast("🚗 Cape Town traffic, incoming."); tBuf = ""; }
+    else if(tBuf.endsWith("bar")){ toast("🍺 The bar is that way →"); tBuf = ""; }
+  }
+});
+/* tap the countdown 7 times */
+let cdTaps = 0, cdTimer = null;
+$("#cd").addEventListener("click", () => {
+  cdTaps++;
+  clearTimeout(cdTimer);
+  cdTimer = setTimeout(() => cdTaps = 0, 2600);
+  if(cdTaps === 7){
+    cdTaps = 0;
+    const has = Object.values(state.items).some(i => i.t.toLowerCase().includes("braai tong"));
+    if(!has){
+      const id = uid();
+      state.items[id] = {id, t:"Pack the braai tongs 🔥 (yes, really)", c:"misc", w:"both", d:0, u:now()};
+      save(); render();
+      toast("🥩 Secret item unlocked.");
+    } else flyPlane();
+  }
+});
+/* long-press the title for a captain's log line */
+let holdTimer = null;
+const LOGS = [
+  "Captain's log: seven price pulls, one conclusion — book it and stop watching.",
+  "Captain's log: LIFT's Friday morning went from R1,795 to R3,170 while we deliberated.",
+  "Captain's log: the car's excess excludes undercarriage. Reading the fine print is a love language.",
+  "Captain's log: Friday vs Saturday is now worth only R303. Choose with your hearts.",
+  "Captain's log: somewhere in Cape Town, a Toyota Starlet is waiting for us.",
+];
+$("#title").addEventListener("pointerdown", () => {
+  holdTimer = setTimeout(() => {
+    toast("📓 " + LOGS[Math.floor(Math.random()*LOGS.length)], 4200);
+  }, 1150);
+});
+["pointerup","pointerleave","pointercancel"].forEach(ev =>
+  $("#title").addEventListener(ev, () => clearTimeout(holdTimer)));
+
+/* -------------------------------- events ---------------------------- */
+$("#sections").addEventListener("click", (e) => {
+  const del = e.target.closest("[data-del]");
+  if(del){
+    const id = del.dataset.del;
+    e.stopPropagation();
+    if(state.items[id]){ state.items[id].x = 1; touch(state.items[id]); render(); }
+    return;
+  }
+  const toggle = e.target.closest("[data-toggle]");
+  if(toggle && !e.target.closest(".it")){
+    const id = toggle.dataset.toggle;
+    const key = "cpt.closed." + id;
+    localStorage.setItem(key, localStorage.getItem(key) === "1" ? "0" : "1");
+    render(); return;
+  }
+  const rowEl = e.target.closest(".it");
+  if(rowEl){
+    const it = state.items[rowEl.dataset.id];
+    if(!it) return;
+    it.d = it.d ? 0 : 1;
+    it.dt = it.d ? now() : null;
+    it.dw = it.d ? me : null;
+    touch(it);
+    render();
+    if(it.d){
+      const items = Object.values(state.items).filter(i => !i.x);
+      const done = items.filter(i => i.d).length;
+      if(done === 3) once("three", () => toast("Three down. Momentum is a beautiful thing."));
+      if(done === 10) once("ten", () => toast("Ten done — you're officially better at this than most people."));
+      if(done === items.length - 1) toast("One left. Don't leave it to the airport.");
+    }
+  }
+});
+$("#addBtn").addEventListener("click", addItem);
+$("#newItem").addEventListener("keydown", e => { if(e.key === "Enter") addItem(); });
+function addItem(){
+  const t = $("#newItem").value.trim();
+  if(!t) return;
+  const id = uid();
+  state.items[id] = {id, t, c:$("#newCat").value, w:$("#newWho").value, d:0, u:now()};
+  $("#newItem").value = "";
+  save(); render(); syncOnce();
+  if(state.items[id]) toast("Added ✓");
+}
+$$(".chip[data-who]").forEach(b => b.addEventListener("click", () => {
+  me = b.dataset.who;
+  localStorage.setItem(LS.who, me);
+  render();
+}));
+$("#openSettings").addEventListener("click", () => {
+  $("#fbUrl").value = cfg.fbUrl || "";
+  $("#tripCode").value = cfg.tripCode || "";
+  $("#settings").classList.add("open");
+});
+$("#settings").addEventListener("click", e => { if(e.target.id === "settings") $("#settings").classList.remove("open"); });
+$("#saveCfg").addEventListener("click", () => {
+  cfg.fbUrl = $("#fbUrl").value.trim();
+  cfg.tripCode = $("#tripCode").value.trim();
+  localStorage.setItem(LS.cfg, JSON.stringify(cfg));
+  $("#settings").classList.remove("open");
+  if(fbBase()){ syncOnce(true); toast("Sync on — checking the cloud…"); }
+  else { setSync("local", "Saved on this device"); toast("Add a database URL + trip code to sync"); }
+});
+$("#clearCfg").addEventListener("click", () => {
+  cfg = {fbUrl:"", tripCode:""};
+  localStorage.setItem(LS.cfg, JSON.stringify(cfg));
+  $("#settings").classList.remove("open");
+  setSync("local", "Saved on this device");
+  toast("Sync turned off");
+});
+$("#saveNames").addEventListener("click", () => {
+  names.a = ($("#nameA").value.trim() || "Me");
+  names.b = ($("#nameB").value.trim() || "Partner");
+  localStorage.setItem("cpt.names", JSON.stringify(names));
+  render(); toast("Names saved");
+});
+$("#exportLink").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state, null, 1)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "trip-checklist-backup.json";
+  a.click();
+  toast("Backup downloaded");
+});
+$("#passClose").addEventListener("click", () => $("#passModal").classList.remove("open"));
+
+/* -------------------------------- boot ------------------------------ */
+load();
+render();
+tick();
+setInterval(tick, 1000);
+if(fbBase()) syncOnce();
+setInterval(() => { if(fbBase()) syncOnce(); }, 8000);
+document.addEventListener("visibilitychange", () => { if(!document.hidden && fbBase()) syncOnce(); });
+</script>
+</body>
+</html>
