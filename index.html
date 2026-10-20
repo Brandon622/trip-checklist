@@ -562,8 +562,10 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     <div class="row"><input type="text" id="tripCode" placeholder="shared trip code"></div>
     <div class="row">
       <button class="btn" id="saveCfg">Save &amp; sync</button>
-      <button class="btn ghost" id="clearCfg">Turn off</button>
+      <button class="btn ghost" id="testCfg">Test connection</button>
+      <button class="btn ghost" id="clearCfg">Off</button>
     </div>
+    <div class="hint" id="testOut" style="margin-top:10px"></div>
     <div class="hint">
       Rules allow read/write only under <code>/trips/&lt;your-code&gt;</code>. Keep the code private —
       it is the lock, together with your database URL. Nothing sensitive belongs in this list.
@@ -1037,6 +1039,35 @@ $("#saveCfg").addEventListener("click", () => {
   $("#settings").classList.remove("open");
   if(fbBase()){ syncOnce(true); toast("Sync on — checking the cloud…"); }
   else { setSync("local", "Saved on this device"); toast("Add a database URL + trip code to sync"); }
+});
+$("#testCfg").addEventListener("click", async () => {
+  const url  = ($("#fbUrl").value.trim() || "").replace(/\/+$/, "");
+  const code = ($("#tripCode").value.trim() || "").toLowerCase();
+  const out  = $("#testOut");
+  if(!url || !code){ out.innerHTML = "Fill in both fields first."; return; }
+  if(!/^https?:\/\//.test(url)){ out.innerHTML = "The URL must start with <code>https://</code>."; return; }
+  out.innerHTML = "Testing…";
+  const target = url + "/trips/" + encodeURIComponent(code) + ".json";
+  try{
+    const r = await fetch(target + "?t=" + Date.now(), {cache:"no-store"});
+    if(r.ok){
+      let j = null;
+      try{ j = await r.json(); }catch(e){}
+      const n = (j && j.items) ? Object.keys(j.items).length : 0;
+      out.innerHTML = "✓ <b>Reachable</b> — the rules allow this path. " +
+        (n ? n + " item" + (n === 1 ? "" : "s") + " already stored there." : "Database is empty, so you're first in.");
+    } else if(r.status === 401 || r.status === 403){
+      out.innerHTML = "✕ <b>HTTP " + r.status + "</b> — the rules are still locked. Paste the rules JSON into the " +
+        "Rules tab in Firebase and press <b>Publish</b>.";
+    } else if(r.status === 404){
+      out.innerHTML = "✕ <b>HTTP 404</b> — wrong URL. Use the <b>Realtime Database</b> URL that ends in " +
+        "<code>firebasedatabase.app</code> (not Firestore's).";
+    } else {
+      out.innerHTML = "✕ <b>HTTP " + r.status + "</b> — unexpected. Screenshot this and I'll work it out.";
+    }
+  }catch(e){
+    out.innerHTML = "✕ <b>Couldn't reach it</b> (" + e.message + "). Check the URL starts with https:// and that you have signal.";
+  }
 });
 $("#clearCfg").addEventListener("click", () => {
   cfg = {fbUrl:"", tripCode:""};
