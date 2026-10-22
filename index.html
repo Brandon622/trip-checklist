@@ -194,30 +194,66 @@ html[data-theme="ember"]{
 .sw .strip{display:flex;height:11px;border-radius:4px;overflow:hidden}
 .sw .strip i{flex:1}
 
-.wxbar{margin-top:12px;border:1px solid var(--line);border-radius:16px;
-  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
-  padding:11px 0 8px;overflow:hidden}
-.wxhead{display:flex;align-items:center;gap:8px;padding:0 14px 10px;
-  font-size:11.5px;color:var(--dim);line-height:1.4}
-.wxhead b{color:var(--muted);font-weight:700}
-.wxrow{display:flex;align-items:flex-start;gap:8px;padding:3px 0 2px}
-.wxc{flex:none;width:34px;padding-left:13px;padding-top:14px;
-  font-size:9.5px;font-weight:900;letter-spacing:.08em;color:var(--muted)}
-.wxtrack{display:flex;gap:7px;overflow-x:auto;padding:2px 14px 7px 0;
-  scroll-snap-type:x proximity;scrollbar-width:none}
+.wxfab{position:fixed;right:10px;bottom:10px;z-index:50;width:50px;height:50px;border-radius:18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;
+  border:1px solid var(--line2);color:var(--ink);font:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.06));
+  backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);
+  box-shadow:0 14px 34px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.18);
+  transition:transform .18s,box-shadow .18s,border-color .18s}
+.wxfab:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.wxfab.on{border-color:var(--amber);box-shadow:0 14px 34px rgba(0,0,0,.42),0 0 0 2px rgba(255,166,61,.24)}
+.wfi{line-height:0;color:var(--gold);display:block}
+.wft{font-size:10px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
+@media(min-width:860px){.wxfab{right:18px;bottom:20px;width:56px;height:56px}}
+.wxseg{display:flex;gap:4px;background:rgba(255,255,255,.05);border:1px solid var(--line);
+  border-radius:10px;padding:3px}
+.wxsegbtn{border:none;background:transparent;color:var(--muted);font:inherit;font-size:10px;font-weight:900;
+  letter-spacing:.08em;padding:5px 9px;border-radius:7px;cursor:pointer;min-height:28px}
+.wxsegbtn.on{background:linear-gradient(180deg,#ff9a3d,#ff5f2f);color:#2a0a05}
+.wci{line-height:0;color:var(--gold);flex:none;display:block}
+.wcv{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05}
+.wcv b{font-size:13px;font-variant-numeric:tabular-nums;font-weight:800}
+.wcv i{font-size:8px;font-style:normal;letter-spacing:.1em;color:var(--muted);font-weight:800;margin-top:2px}
+
+.wxpanel{position:fixed;right:12px;bottom:84px;width:min(330px,calc(100vw - 24px));z-index:51;
+  border:1px solid var(--line2);border-radius:18px;padding:13px 0 10px;
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  box-shadow:0 26px 70px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);
+  display:none}
+.wxpanel.open{display:block;animation:wxIn .18s ease-out}
+@keyframes wxIn{from{transform:translateY(10px) scale(.975)}to{transform:none}}
+@media(min-width:860px){.wxpanel{right:18px;bottom:auto;top:176px;width:min(468px,calc(100vw - 36px))}}
+.wxph{display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.wxpt{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:700;color:var(--ink);padding:9px 14px 0}
+.wpx{border:none;background:transparent;color:var(--dim);font-size:12px;cursor:pointer;padding:4px 2px 4px 8px}
+.wpx:hover{color:var(--ink)}
+.wxps{padding:2px 14px 0;font-size:11px;color:var(--dim);line-height:1.45}
+.wxps b{color:var(--muted);font-weight:700}
+.wxspark{display:block;width:100%;height:46px;margin:1px 0 2px}
+.wxspark .ln{fill:none;stroke:var(--amber);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.wxspark .ar{fill:url(#spk)}
+.wxspark .dt{fill:var(--gold)}
+.wxspark stop.a{stop-color:var(--amber);stop-opacity:.42}
+.wxspark stop.b{stop-color:var(--amber);stop-opacity:0}
+.wxtrack{display:flex;gap:7px;overflow-x:auto;padding:6px 14px 4px;scroll-snap-type:x proximity;scrollbar-width:none}
 .wxtrack::-webkit-scrollbar{display:none}
-.wcard{flex:none;min-width:51px;scroll-snap-align:start;display:flex;flex-direction:column;
-  align-items:center;gap:2px;padding:7px 6px 6px;border-radius:11px;
-  background:rgba(255,255,255,.035);border:1px solid transparent;color:var(--ink)}
-.wcard.today{border-color:var(--line2);background:rgba(255,255,255,.075)}
-.wcard.trip{border-color:rgba(255,166,61,.5);background:rgba(255,166,61,.12)}
-.wcard.today.trip{border-color:var(--amber)}
-.wd{font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
-.wi{color:var(--amber);line-height:0;margin:2px 0 1px}
-.wcard.trip .wi{color:var(--gold)}
-.wt{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.wcard{flex:none;min-width:55px;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;
+  gap:2px;padding:8px 6px 6px;border-radius:13px;border:1px solid var(--line);
+  background:rgba(255,255,255,.045);color:var(--ink)}
+.wcard.wx-sun{background:linear-gradient(180deg,rgba(255,198,92,.2),rgba(255,198,92,.04))}
+.wcard.wx-cloud{background:linear-gradient(180deg,rgba(206,222,255,.14),rgba(206,222,255,.03))}
+.wcard.wx-wet{background:linear-gradient(180deg,rgba(126,176,255,.22),rgba(126,176,255,.05))}
+.wcard.trip{border-color:rgba(255,166,61,.6);box-shadow:inset 0 0 0 1px rgba(255,166,61,.16)}
+.wd{font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.wi{color:var(--gold);line-height:0;margin:2px 0 1px}
+.wt{font-size:11.5px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
 .wt b{color:var(--ink);font-weight:800}
 .wr{font-size:9px;color:var(--them);min-height:10px;font-weight:800}
+body{padding-bottom:74px}
+.wxlegend{display:flex;align-items:center;gap:6px;padding:7px 14px 0;font-size:9.5px;color:var(--dim)}
+.wxdTrip{width:9px;height:9px;border-radius:3px;border:1.5px solid rgba(255,166,61,.7);
+  background:rgba(255,166,61,.16);display:block}
 .artboard{position:absolute;inset:0}
 .hero svg.scene.scene-tall{display:none}
 @media (max-width:599px){
@@ -740,20 +776,10 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     </div>
   </div>
 
-  <div class="wxbar" id="wx">
-    <div class="wxhead">
-      <span class="wxDot"></span>
-      <span id="wxLine">Cape Town sky &middot; reading the weather&hellip;</span>
-    </div>
-    <div class="wxrow">
-      <span class="wxc">JHB</span>
-      <div class="wxtrack" id="trackJnb"></div>
-    </div>
-    <div class="wxrow">
-      <span class="wxc">CPT</span>
-      <div class="wxtrack" id="trackCpt"></div>
-    </div>
-  </div>
+  <button class="wxfab" id="wxFab" type="button" aria-label="The week's weather">
+    <span class="wfi" id="fabIcon"></span>
+    <span class="wft" id="fabTemp">&ndash;&deg;</span>
+  </button>
 
 
   <div class="who" id="who">
@@ -845,6 +871,21 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     </div>
     <div class="row"><button class="btn" id="saveNames">Save names</button></div>
   </div>
+</div>
+
+<div class="wxpanel" id="wxpanel" aria-hidden="true">
+  <div class="wxph">
+    <div class="wxseg" id="wxSeg">
+      <button class="wxsegbtn" type="button" data-city="jnb">JHB</button>
+      <button class="wxsegbtn on" type="button" data-city="cpt">CPT</button>
+    </div>
+    <button class="wpx" type="button" id="wxClose" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="wxpt" id="wxpTitle">Cape Town</div>
+  <div class="wxps" id="wxpSub">reading the weather&hellip;</div>
+  <svg class="wxspark" id="wxSpark" viewBox="0 0 220 46" aria-hidden="true"></svg>
+  <div class="wxtrack" id="wxpTrack"></div>
+  <div class="wxlegend"><span class="wxdTrip"></span>your four days</div>
 </div>
 
 <div class="sheet" id="themes">
@@ -1396,19 +1437,19 @@ function paintWeather(){
     }
   }
 
-  const line = $("#wxLine");
-  if(line){
-    line.innerHTML = "<b>" + Math.round(wx.temperature_2m) + "&deg;C</b> in Cape Town &middot; " +
-      (WMO[wx.weather_code] || "mixed sky") + " &middot; " + Math.round(cover) + "% cloud &middot; " +
-      windArrow(wx.wind_direction_10m) + " " + Math.round(wind) + " km/h";
-  }
+  const sub = $("#wxpSub");
+  if(sub && $("#wxpanel").classList.contains("open")) sub.innerHTML = cityNowText(wxCity);
 }
 
 const TRIP_DAYS = ["2026-10-23","2026-10-24","2026-10-25","2026-10-26"];
+const CITY_NAME = {jnb: "Joburg", cpt: "Cape Town"};
+let weekData = {jnb: null, cpt: null};
+let wxCity = "cpt";
 
-function wxIcon(code){
+function wxIcon(code, size){
   const A = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
-  const wrap = inner => '<svg viewBox="0 0 24 24" width="19" height="19" ' + A + '>' + inner + '</svg>';
+  const sz = size || 19;
+  const wrap = inner => '<svg viewBox="0 0 24 24" width="' + sz + '" height="' + sz + '" ' + A + '>' + inner + '</svg>';
   const cloud = '<path d="M6.6 15.4h9.1a2.85 2.85 0 0 0 .25-5.68 4.6 4.6 0 0 0-8.8-1.2A3.45 3.45 0 0 0 6.6 15.4z"/>';
   const sun = '<circle cx="12" cy="12" r="3.6"/><path d="M12 3.4v1.9M12 18.7v1.9M3.4 12h1.9M18.7 12h1.9M5.9 5.9l1.4 1.4M16.7 16.7l1.4 1.4M18.1 5.9l-1.4 1.4M7.3 16.7l-1.4 1.4"/>';
   const drops3 = '<path d="M9 17.3l-.8 2.5M13 17.3l-.8 2.5M17 17.3l-.8 2.5"/>';
@@ -1424,33 +1465,130 @@ function wxIcon(code){
   return wrap(cloud);
 }
 
-function paintWeek(cities){
-  const map = {jnb: cities[0], cpt: cities[1]};
-  Object.keys(map).forEach(key => {
-    const track = document.getElementById(key === "jnb" ? "trackJnb" : "trackCpt");
-    const city = map[key];
-    if(!track) return;
-    if(!city || !city.daily || !city.daily.time){ track.innerHTML = ""; return; }
-    const d = city.daily;
-    track.innerHTML = d.time.map((iso, i) => {
-      const dt = new Date(iso + "T12:00:00");
-      const code = d.weather_code ? d.weather_code[i] : 3;
-      const mx = Math.round(d.temperature_2m_max[i]);
-      const mn = Math.round(d.temperature_2m_min[i]);
-      const pr = d.precipitation_probability_max ? d.precipitation_probability_max[i] : null;
-      const trip  = TRIP_DAYS.indexOf(iso) > -1;
-      const today = i === 0;
-      const name  = (today ? "Now" : dt.toLocaleDateString("en-ZA", {weekday: "short"})) + " " + dt.getDate();
-      const tip   = (city.daily.time[i] || "") + " · " + mx + "°/" + mn + "°" + (pr != null ? " · " + pr + "% rain" : "");
-      return '<div class="wcard' + (trip ? " trip" : "") + (today ? " today" : "") + '" title="' + tip + '">' +
-        '<span class="wd">' + name + '</span>' +
-        '<span class="wi">' + wxIcon(code) + '</span>' +
-        '<span class="wt"><b>' + mx + '&deg;</b> ' + mn + '&deg;</span>' +
-        '<span class="wr">' + (pr != null && pr >= 10 ? pr + "%" : "") + '</span>' +
-      '</div>';
-    }).join("");
+function condClass(code){
+  if(code === 0 || code === 1) return "wx-sun";
+  if(code === 2 || code === 3 || code === 45 || code === 48) return "wx-cloud";
+  return "wx-wet";
+}
+
+function paintFab(){
+  const c = weekData[wxCity];
+  const tEl = $("#fabTemp"), iEl = $("#fabIcon");
+  if(c && c.daily){
+    if(tEl) tEl.innerHTML = Math.round(c.daily.temperature_2m_max[0]) + "&deg;";
+    if(iEl) iEl.innerHTML = wxIcon(c.daily.weather_code ? c.daily.weather_code[0] : 3, 18);
+  }
+  const fab = $("#wxFab");
+  if(fab) fab.classList.toggle("on", $("#wxpanel").classList.contains("open"));
+  $$(".wxsegbtn").forEach(b => {
+    b.classList.toggle("on", b.dataset.city === wxCity);
+    b.setAttribute("aria-pressed", b.dataset.city === wxCity ? "true" : "false");
   });
 }
+function cityNowText(key){
+  const c = weekData[key];
+  if(key === "cpt" && wx && wx.temperature_2m != null){
+    return "<b>" + Math.round(wx.temperature_2m) + "&deg;C</b> now &middot; " +
+      (WMO[wx.weather_code] || "mixed") + " &middot; " + Math.round(wx.cloud_cover || 0) + "% cloud &middot; " +
+      windArrow(wx.wind_direction_10m) + " " + Math.round(wx.wind_speed_10m || 0) + " km/h";
+  }
+  if(!c || !c.daily) return "reading the weather&hellip;";
+  const d = c.daily;
+  const pr = d.precipitation_probability_max ? d.precipitation_probability_max[0] : null;
+  let txt = "<b>" + (WMO[d.weather_code[0]] || "mixed") + "</b> &middot; today " +
+    Math.round(d.temperature_2m_max[0]) + "&deg;/" + Math.round(d.temperature_2m_min[0]) + "&deg;";
+  if(pr != null && pr >= 10) txt += " &middot; " + pr + "% chance of rain";
+  return txt;
+}
+
+function sparkline(vals){
+  const svg = $("#wxSpark");
+  if(!svg || !vals || vals.length < 2) return;
+  const W = 220, H = 46, pad = 7;
+  const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  const span = Math.max(1, hi - lo);
+  const pts = vals.map((v, i) => [
+    pad + i * (W - 2*pad) / (vals.length - 1),
+    H - pad - ((v - lo) / span) * (H - 2*pad)
+  ]);
+  const line = "M" + pts.map(p => p[0].toFixed(1) + " " + p[1].toFixed(1)).join("L");
+  const area = line + "L" + pts[pts.length-1][0].toFixed(1) + " " + H + "L" + pts[0][0].toFixed(1) + " " + H + "Z";
+  svg.innerHTML =
+    '<defs><linearGradient id="spk" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop class="a" offset="0%"/><stop class="b" offset="100%"/></linearGradient></defs>' +
+    '<path class="ar" d="' + area + '"/>' +
+    '<path class="ln" d="' + line + '"/>' +
+    pts.map(p => '<circle class="dt" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="1.9"/>').join("");
+}
+
+function renderPanel(){
+  const c = weekData[wxCity];
+  const title = $("#wxpTitle"), sub = $("#wxpSub"), track = $("#wxpTrack");
+  if(!title || !sub || !track) return;
+  title.textContent = CITY_NAME[wxCity];
+  sub.innerHTML = cityNowText(wxCity);
+  if(!c || !c.daily){ track.innerHTML = ""; sparkline(null); return; }
+
+  const d = c.daily;
+  sparkline(d.temperature_2m_max.map(Number));
+
+  track.innerHTML = d.time.map((iso, i) => {
+    const dt = new Date(iso + "T12:00:00");
+    const code = d.weather_code ? d.weather_code[i] : 3;
+    const mx = Math.round(d.temperature_2m_max[i]);
+    const mn = Math.round(d.temperature_2m_min[i]);
+    const pr = d.precipitation_probability_max ? d.precipitation_probability_max[i] : null;
+    const trip  = TRIP_DAYS.indexOf(iso) > -1;
+    const today = i === 0;
+    const name  = (today ? "Now" : dt.toLocaleDateString("en-ZA", {weekday: "short"})) + " " + dt.getDate();
+    const tip   = iso + " · " + mx + "°/" + mn + "°" + (pr != null ? " · " + pr + "% rain" : "");
+    return '<div class="wcard ' + condClass(code) + (trip ? " trip" : "") + (today ? " today" : "") + '" title="' + tip + '">' +
+      '<span class="wd">' + name + '</span>' +
+      '<span class="wi">' + wxIcon(code) + '</span>' +
+      '<span class="wt"><b>' + mx + '&deg;</b> ' + mn + '&deg;</span>' +
+      '<span class="wr">' + (pr != null && pr >= 10 ? pr + "%" : "") + '</span>' +
+    '</div>';
+  }).join("");
+}
+
+function paintWeek(cities){
+  weekData.jnb = cities[0];
+  weekData.cpt = cities[1];
+  paintFab();
+  renderPanel();
+}
+
+function openWeek(city){
+  const panel = $("#wxpanel");
+  if(city) wxCity = city;
+  renderPanel();
+  panel.classList.add("open");
+  panel.setAttribute("aria-hidden", "false");
+  paintFab();
+}
+function closeWeek(){
+  const panel = $("#wxpanel");
+  panel.classList.remove("open");
+  panel.setAttribute("aria-hidden", "true");
+  paintFab();
+}
+$("#wxFab").addEventListener("click", () => {
+  const panel = $("#wxpanel");
+  if(panel.classList.contains("open")) closeWeek(); else openWeek(wxCity);
+});
+$$(".wxsegbtn").forEach(b => b.addEventListener("click", e => {
+  e.stopPropagation();
+  wxCity = b.dataset.city;
+  renderPanel();
+  paintFab();
+}));
+$("#wxClose").addEventListener("click", closeWeek);
+document.addEventListener("click", e => {
+  const panel = $("#wxpanel");
+  if(!panel.classList.contains("open")) return;
+  if(panel.contains(e.target) || e.target.closest("#wxFab")) return;
+  closeWeek();
+});
 
 async function loadWeather(){
   const curUrl = "https://api.open-meteo.com/v1/forecast?latitude=-33.9249&longitude=18.4241"
@@ -1471,14 +1609,14 @@ async function loadWeather(){
     wx = Object.assign({}, j.current, {sunrise: j.daily.sunrise[0], sunset: j.daily.sunset[0]});
     paintWeather();
     placeSky();
-  } else {
-    const line = $("#wxLine");
-    if(line) line.innerHTML = "Cape Town sky &middot; <b>offline</b> — showing a clear sunset instead";
   }
 
   if(weekRes.status === "fulfilled"){
     const w = weekRes.value;
     paintWeek(Array.isArray(w) ? w : [w, w]);
+  } else {
+    const sub = $("#wxpSub");
+    if(sub) sub.innerHTML = "<b>offline</b> — no forecast right now";
   }
 }
 
