@@ -10,13 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* last light over Table Bay: plum → wine → coral → gold */
-  --night:#14080f; --deep:#1d0d16; --panel:#241119; --panel2:#1b0c13;
-  --line:rgba(255,214,186,.11); --line2:rgba(255,214,186,.2);
-  --ink:#fdf1e7; --muted:#cfae9d; --dim:#a2837a;
-  --amber:#ffb066; --amber2:#ff8f52;
-  --sea:#ffcf8a;            /* warm accent, kept under the old name */
-  --me:#ffc78a; --them:#ff8fa8; --good:#8fd694; --bad:#ff6b5a;
+  /* sunset, turned up: magenta → coral → tangerine → gold */
+  --night:#1a0712; --deep:#26081b; --panel:#310e23; --panel2:#250a1a;
+  --line:rgba(255,186,150,.16); --line2:rgba(255,186,150,.3);
+  --ink:#fff6ee; --muted:#f6b9a2; --dim:#d08f86;
+  --amber:#ffa63d; --amber2:#ff6f2f; --coral:#ff5f5f; --magenta:#ff3d8b; --gold:#ffd166;
+  --sea:#ffd166;            /* warm accent, kept under the old name */
+  --me:#ffc75f; --them:#ff6fae; --good:#64e08a; --bad:#ff4d4d;
   --serif:"Fraunces", ui-serif, "Iowan Old Style", Palatino, Georgia, serif;
   --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --r:16px;
@@ -99,14 +99,26 @@ h1 em{font-style:italic;font-weight:600;color:var(--amber)}
   border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:700;cursor:pointer;
   font-family:inherit;transition:.16s;min-height:34px;
 }
-.chip.on{color:#08161c;background:var(--sea);border-color:var(--sea)}
-.chip.on.them{background:var(--them);border-color:var(--them);color:#2a0d1a}
+.chip.on{color:#2a0a05;background:linear-gradient(180deg,var(--gold),var(--amber));border-color:var(--gold)}
+.chip.on.them{background:linear-gradient(180deg,#ff8dbf,var(--magenta));border-color:var(--them);color:#2a0413}
 .chip.tiny{padding:6px 11px;font-size:11.5px}
 
+.tabs{display:flex;gap:6px;margin-top:16px;background:rgba(255,255,255,.045);
+  border:1px solid var(--line);padding:5px;border-radius:15px}
+.tab{flex:1;border:none;background:transparent;color:var(--muted);font:inherit;
+  font-weight:800;font-size:13.5px;padding:10px 10px;border-radius:11px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;transition:.16s}
+.tab.on{background:linear-gradient(180deg,#ff9a3d,#ff5f2f);color:#2a0a05;
+  box-shadow:0 10px 26px rgba(255,100,45,.4)}
+.tab.on[data-kind="buy"]{background:linear-gradient(180deg,#ff8dbf,#ff3d8b);
+  box-shadow:0 10px 26px rgba(255,61,139,.38)}
+.tcount{font-size:11px;font-weight:900;background:rgba(0,0,0,.26);border-radius:99px;padding:2px 7px;
+  font-variant-numeric:tabular-nums}
+.tab.on .tcount{background:rgba(0,0,0,.2)}
 .barwrap{margin-top:18px}
 .bar{position:relative;height:6px;background:rgba(255,255,255,.07);border-radius:99px}
 .bar>i{display:block;height:100%;width:0;border-radius:99px;
-  background:linear-gradient(90deg,var(--sea),var(--amber));transition:width .5s cubic-bezier(.3,.9,.3,1)}
+  background:linear-gradient(90deg,var(--magenta),var(--coral),var(--amber),var(--gold));transition:width .5s cubic-bezier(.3,.9,.3,1)}
 #barPlane{
   position:absolute;top:50%;left:0;width:19px;height:19px;color:var(--ink);
   transform:translate(-50%,-52%);transition:left .5s cubic-bezier(.3,.9,.3,1);
@@ -137,15 +149,15 @@ section.collapsed .sbody{display:none}
   transition:.16s;background:rgba(0,0,0,.25);
 }
 .box svg{width:12px;height:12px;opacity:0;transform:scale(.55);transition:.16s}
-.it.done .box{background:var(--amber);border-color:var(--amber)}
+.it.done .box{background:linear-gradient(180deg,var(--coral),var(--amber2));border-color:var(--coral);box-shadow:0 0 14px rgba(255,95,95,.45)}
 .it.done .box svg{opacity:1;transform:scale(1)}
 .it .txt{flex:1;min-width:0}
 .it .t{font-size:14.5px;word-break:break-word;letter-spacing:-.005em}
 .it.done .t{color:var(--dim);text-decoration:line-through;text-decoration-color:rgba(255,255,255,.28)}
 .it .meta{font-size:10.5px;color:var(--dim);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .it .who-pill{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:4px;padding:2px 6px;border:1px solid}
-.w-a{color:var(--me);border-color:rgba(94,200,192,.35);background:rgba(94,200,192,.08)}
-.w-b{color:var(--them);border-color:rgba(232,139,176,.32);background:rgba(232,139,176,.08)}
+.w-a{color:var(--me);border-color:rgba(255,199,95,.45);background:rgba(255,199,95,.12)}
+.w-b{color:var(--them);border-color:rgba(255,111,174,.45);background:rgba(255,111,174,.12)}
 .w-both{color:var(--muted);border-color:rgba(255,255,255,.14)}
 .it .del{
   border:none;background:transparent;color:#3a4f5e;font-size:15px;padding:4px 5px;
@@ -166,13 +178,14 @@ input[type=text]::placeholder{color:#5d7383}
 input[type=text]:focus,select:focus{outline:none;border-color:var(--sea);box-shadow:0 0 0 3px rgba(94,200,192,.14)}
 .btn{
   border:none;border-radius:10px;padding:11px 17px;font-weight:800;font-size:13.5px;
-  background:var(--amber);color:#1a1104;cursor:pointer;font-family:inherit;min-height:44px;
+  background:linear-gradient(180deg,#ffb44d,#ff6f2f);color:#2a0a05;
+  box-shadow:0 10px 26px rgba(255,110,50,.34);cursor:pointer;font-family:inherit;min-height:44px;
   letter-spacing:.01em;
 }
 .btn:active{transform:translateY(1px)}
 .btn.ghost{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line2)}
 .addRow2{display:flex;gap:8px;margin-top:8px;align-items:center}
-.addRow2 select{flex:1;font-size:13px;padding:9px 10px;min-height:38px}
+.addRow2 select{flex:1.35;font-size:12.5px;padding:9px 8px;min-height:38px;text-overflow:ellipsis}
 
 /* ============ footer ============ */
 .foot{margin-top:24px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:11.5px;color:var(--dim)}
@@ -244,14 +257,14 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
   <svg class="scene scene-wide" viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <defs>
       <linearGradient id="skyS" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#2b0c2e"/>
-        <stop offset="20%"  stop-color="#4a123a"/>
-        <stop offset="40%"  stop-color="#7c2244"/>
-        <stop offset="58%"  stop-color="#b8443c"/>
-        <stop offset="72%"  stop-color="#e06f3f"/>
-        <stop offset="84%"  stop-color="#f4a25c"/>
-        <stop offset="93%"  stop-color="#ffd08a"/>
-        <stop offset="100%" stop-color="#ffeec4"/>
+        <stop offset="0%"   stop-color="#400a49"/>
+        <stop offset="24%"  stop-color="#6d0d52"/>
+        <stop offset="44%"  stop-color="#a5174f"/>
+        <stop offset="58%"  stop-color="#d92f45"/>
+        <stop offset="68%"  stop-color="#f9552f"/>
+        <stop offset="74%"  stop-color="#ff8a33"/>
+        <stop offset="76.5%" stop-color="#ffc94f"/>
+        <stop offset="100%" stop-color="#fff3cf"/>
       </linearGradient>
       <radialGradient id="sunS" cx="0.5" cy="0.5" r="0.5">
         <stop offset="0%"   stop-color="#fff8e2"/>
@@ -294,7 +307,7 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     </g>
 
     <!-- the sun, going down into the Atlantic past Signal Hill -->
-    <circle cx="1352" cy="330" r="96" fill="url(#sunS)" opacity=".16" filter="url(#softS)"/>
+    <circle cx="1352" cy="330" r="120" fill="url(#sunS)" opacity=".22" filter="url(#softS)"/>
     <circle cx="1352" cy="330" r="42" fill="url(#sunS)"/>
 
     <!-- birds -->
@@ -306,13 +319,13 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
 
     <!-- far ridge, hazy and warmer with distance -->
     <path d="M0 372 L70 358 L150 344 L232 328 L300 296 L340 270 L374 246 L404 218 L424 212 L648 209 L900 207 L932 228 L982 270 L1032 294 L1072 278 L1102 252 L1132 246 L1172 294 L1244 320 L1288 340 L1288 372 Z"
-          fill="#6b2a44" opacity=".72"/>
+          fill="#c2315f" opacity=".62"/>
 
     <!-- Devil's Peak · the flat top · Lion's Head · Signal Hill, down to the water -->
     <path d="M0 368 L62 352 L122 340 L196 322 L248 300 L286 262 L306 236 L323 258 L357 240 L383 214 L397 202 L412 199
              L888 197 L905 210 L921 248 L960 274 L1004 296 L1044 310 L1082 268 L1102 244 L1119 230 L1137 250 L1163 288
              L1207 308 L1262 330 L1288 344 L1290 372 L0 372 Z"
-          fill="#2a0f1c"/>
+          fill="#380f22"/>
 
     <!-- gold rim light along the edges facing the sun -->
     <g fill="none" stroke="#ffd9a0" stroke-linecap="round">
@@ -370,14 +383,14 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
   <svg class="scene scene-tall" viewBox="0 0 720 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="skyT" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#2b0c2e"/>
-        <stop offset="22%"  stop-color="#4a123a"/>
-        <stop offset="44%"  stop-color="#7c2244"/>
-        <stop offset="60%"  stop-color="#b8443c"/>
-        <stop offset="73%"  stop-color="#e06f3f"/>
-        <stop offset="85%"  stop-color="#f4a25c"/>
-        <stop offset="94%"  stop-color="#ffd08a"/>
-        <stop offset="100%" stop-color="#ffeec4"/>
+        <stop offset="0%"   stop-color="#400a49"/>
+        <stop offset="20%"  stop-color="#6d0d52"/>
+        <stop offset="38%"  stop-color="#a5174f"/>
+        <stop offset="50%"  stop-color="#d92f45"/>
+        <stop offset="58%"  stop-color="#f9552f"/>
+        <stop offset="63%"  stop-color="#ff8a33"/>
+        <stop offset="65%"  stop-color="#ffc94f"/>
+        <stop offset="100%" stop-color="#fff3cf"/>
       </linearGradient>
       <radialGradient id="sunT" cx="0.5" cy="0.5" r="0.5">
         <stop offset="0%"   stop-color="#fff8e2"/>
@@ -418,17 +431,17 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     </g>
 
     <!-- sun going down beyond the mountain -->
-    <circle cx="656" cy="282" r="62" fill="url(#sunT)" opacity=".18" filter="url(#softT)"/>
+    <circle cx="656" cy="282" r="78" fill="url(#sunT)" opacity=".24" filter="url(#softT)"/>
     <circle cx="656" cy="282" r="26" fill="url(#sunT)"/>
 
     <!-- far ridge -->
     <path d="M0 306 L40 292 L86 274 L124 250 L156 226 L176 206 L214 198 L252 192 L286 190 L520 188 L558 200 L594 224 L616 250 L622 306 Z"
-          fill="#6b2a44" opacity=".72"/>
+          fill="#c2315f" opacity=".62"/>
 
     <!-- Devil's Peak · the flat top · Lion's Head, running down to the water -->
     <path d="M0 300 L40 272 L86 246 L124 214 L156 186 L172 170 L186 190 L214 176 L236 156 L248 144
              L520 141 L536 152 L552 186 L578 212 L596 238 L610 262 L616 282 L617 300 Z"
-          fill="#2a0f1c"/>
+          fill="#380f22"/>
 
     <g fill="none" stroke="#ffd9a0" stroke-linecap="round">
       <path d="M248 144 L520 141" stroke-width="1.6" opacity=".55"/>
@@ -503,21 +516,10 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     <button class="chip tiny" id="openSettings">⚙︎ Sync</button>
   </div>
 
-  <div class="barwrap">
-    <div class="bar">
-      <i id="barFill"></i>
-      <svg id="barPlane" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M21 12c0 .6-.5 1-1.1 1H14l-3 7-1.4-.6 1.7-6.4H6.6L5 15.4l-1.2-.5.9-2.9-.9-2.9 1.2-.5 1.6 2.4h4.7L9.6 3.6 11 3l3 7h5.9c.6 0 1.1.4 1.1 1z" opacity=".12"/>
-        <path d="M22 12c0 .7-.6 1.2-1.2 1.2h-6.2l-3.1 7.2-1.6-.7 1.8-6.5H6.4l-1.7 2.5-1.4-.6 1-3.1-1-3.1 1.4-.6 1.7 2.5h5.3L10 4.3l1.6-.7 3.1 7.2h6.1c.7 0 1.2.5 1.2 1.2z"/>
-      </svg>
-    </div>
-    <div class="barmeta">
-      <span><b id="doneCount">0</b> of <b id="allCount">0</b> sorted</span>
-      <span id="pct">0%</span>
-    </div>
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-kind="todo">To do <span class="tcount" id="cntTodo">0</span></button>
+    <button class="tab" data-kind="buy">To buy <span class="tcount" id="cntBuy">0</span></button>
   </div>
-
-  <div id="sections"></div>
 
   <div class="add">
     <div class="addRow">
@@ -533,6 +535,22 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
       </select>
     </div>
   </div>
+
+  <div class="barwrap">
+    <div class="bar">
+      <i id="barFill"></i>
+      <svg id="barPlane" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M21 12c0 .6-.5 1-1.1 1H14l-3 7-1.4-.6 1.7-6.4H6.6L5 15.4l-1.2-.5.9-2.9-.9-2.9 1.2-.5 1.6 2.4h4.7L9.6 3.6 11 3l3 7h5.9c.6 0 1.1.4 1.1 1z" opacity=".12"/>
+        <path d="M22 12c0 .7-.6 1.2-1.2 1.2h-6.2l-3.1 7.2-1.6-.7 1.8-6.5H6.4l-1.7 2.5-1.4-.6 1-3.1-1-3.1 1.4-.6 1.7 2.5h5.3L10 4.3l1.6-.7 3.1 7.2h6.1c.7 0 1.2.5 1.2 1.2z"/>
+      </svg>
+    </div>
+    <div class="barmeta">
+      <span><b id="doneCount">0</b> of <b id="allCount">0</b> sorted</span>
+      <span id="pct">0%</span>
+    </div>
+  </div>
+
+  <div id="sections"></div>
 
   <div class="foot">
     <span id="syncState"><span class="dot local"></span>Saved on this device</span>
@@ -612,14 +630,24 @@ const TRIP = {
   backISO:   "2026-10-26T17:00:00+02:00",   // LIFT 17:00 CPT → JNB
 };
 
-const CATS = [
-  {id:"docs",  ic:"🛂", nm:"Documents & bookings"},
-  {id:"bags",  ic:"🎒", nm:"Bags & clothing"},
-  {id:"tech",  ic:"🔌", nm:"Tech & chargers"},
-  {id:"car",   ic:"🚗", nm:"Car & driving"},
-  {id:"plans", ic:"🗺️", nm:"Plans & bookings"},
-  {id:"misc",  ic:"✨", nm:"Bits & bobs"},
-];
+const KINDS = {
+  todo: { label:"To do", cats:[
+    {id:"docs",  nm:"Documents & bookings"},
+    {id:"bags",  nm:"Bags & clothing"},
+    {id:"tech",  nm:"Tech & chargers"},
+    {id:"car",   nm:"Car & driving"},
+    {id:"plans", nm:"Plans & bookings"},
+    {id:"misc",  nm:"Bits & bobs"},
+  ]},
+  buy: { label:"To buy", cats:[
+    {id:"groceries", nm:"Groceries & snacks"},
+    {id:"braai",     nm:"Braai & beach"},
+    {id:"drinks",    nm:"Drinks & wine"},
+    {id:"pharmacy",  nm:"Pharmacy & toiletries"},
+    {id:"gifts",     nm:"Souvenirs & gifts"},
+    {id:"other",     nm:"Anything else"},
+  ]},
+};
 
 /* seeded from the actual trip research — baggage rules, car excess, etc. */
 const SEED = [
@@ -654,6 +682,28 @@ const SEED = [
   ["Tell someone our itinerary", "misc", "both"],
 ];
 
+/* shopping: what we need in the trolley, not on the to-do list */
+const SEED_BUY = [
+  ["Biltong, droëwors and snacks for the flight", "groceries", "both"],
+  ["Milk, coffee and rusks for the mornings", "groceries", "both"],
+  ["Bread, cheese, cold meat for padkos", "groceries", "a"],
+  ["Ice and a cooler bag for the car", "groceries", "a"],
+  ["Charcoal, firelighters, matches", "braai", "a"],
+  ["Braai tongs and a cheap grid", "braai", "a"],
+  ["Beach towels, if the place doesn't have them", "braai", "both"],
+  ["Wind break or umbrella — the southeaster is real", "braai", "both"],
+  ["Wine for the evenings: buy in Stellenbosch, not the city", "drinks", "both"],
+  ["Beers and cold drinks", "drinks", "b"],
+  ["Water bottles for the car", "drinks", "both"],
+  ["Sunscreen SPF50 and after-sun", "pharmacy", "both"],
+  ["Painkillers, plasters, motion-sickness tablets", "pharmacy", "b"],
+  ["Toothbrush and toothpaste if we're travelling light", "pharmacy", "both"],
+  ["Something for whoever is watching the place", "gifts", "both"],
+  ["Koeksisters or a box of something to take home", "gifts", "b"],
+  ["Small notes for car guards and parking (R20s)", "other", "a"],
+  ["A plug adapter, if we're short one", "other", "b"],
+];
+
 const LS = {
   state: "cpt.state.v1",
   cfg:   "cpt.cfg.v1",
@@ -670,13 +720,16 @@ const esc = (s) => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;","
 let state = null;          // {items:{id:{...}}, meta:{}}
 let cfg   = {fbUrl:"", tripCode:""};
 let me    = "a";           // 'a' | 'b'
+let kind  = localStorage.getItem("cpt.kind") || "todo";   // 'todo' | 'buy'
 let names = {a:"Me", b:"Partner"};
 let remoteOK = false;
 
 /* ------------------------------- state ------------------------------ */
 function blankState(){
   const items = {};
-  SEED.forEach(([t,c,w]) => { const id = uid(); items[id] = {id, t, c, w, d:0, u:now(), x:0}; });
+  const put = (t, c, w, k) => { const id = uid(); items[id] = {id, t, c, w, d:0, u:now(), x:0, kind:k}; };
+  SEED.forEach(([t,c,w]) => put(t, c, w, "todo"));
+  SEED_BUY.forEach(([t,c,w]) => put(t, c, w, "buy"));
   return {items, meta:{created:now()}};
 }
 function load(){
@@ -685,6 +738,17 @@ function load(){
     state = raw ? JSON.parse(raw) : blankState();
   }catch(e){ state = blankState(); }
   if(!state.items) state.items = {};
+  // one-time migration: devices that saved state before "to buy" existed must
+  // still receive the shopping seed, or they'd only ever show the to-do list
+  if(!state.meta) state.meta = {};
+  if(!state.meta.v2buy){
+    const hasBuy = Object.values(state.items).some(i => i.kind === "buy");
+    if(!hasBuy){
+      SEED_BUY.forEach(([t,c,w]) => { const id = uid(); state.items[id] = {id, t, c, w, d:0, u:now(), x:0, kind:"buy"}; });
+    }
+    state.meta.v2buy = true;
+    save();
+  }
   try{ cfg = JSON.parse(localStorage.getItem(LS.cfg) || '{"fbUrl":"","tripCode":""}'); }catch(e){ cfg = {fbUrl:"",tripCode:""}; }
   me = localStorage.getItem(LS.who) || "a";
   try{ const n = JSON.parse(localStorage.getItem("cpt.names")||"null"); if(n) names = n; }catch(e){}
@@ -774,14 +838,23 @@ const ICO = {
   tech :'<path d="M9 3.2v5.1M15 3.2v5.1"/><path d="M6.2 8.3h11.6v2.9a5.8 5.8 0 0 1-11.6 0z"/><path d="M12 17v3.8"/>',
   car  :'<path d="M4.2 15.8v-3l1.9-4.8h11.8l1.9 4.8v3"/><circle cx="7.6" cy="17" r="1.5"/><circle cx="16.4" cy="17" r="1.5"/><path d="M4.2 12.8h15.6"/>',
   plans:'<path d="M12 20.6s6.7-6 6.7-10.5a6.7 6.7 0 1 0-13.4 0C5.3 14.6 12 20.6 12 20.6z"/><circle cx="12" cy="9.9" r="2.3"/>',
-  misc :'<path d="M12 3.4l1.7 4.9 4.9 1.7-4.9 1.7L12 16.6l-1.7-4.9L5.4 10l4.9-1.7z"/><path d="M18.4 16.2l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>'
+  misc :'<path d="M12 3.4l1.7 4.9 4.9 1.7-4.9 1.7L12 16.6l-1.7-4.9L5.4 10l4.9-1.7z"/><path d="M18.4 16.2l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>',
+  groceries:'<path d="M3.8 10.4h16.4l-1.7 8.4H5.5z"/><path d="M8.4 10.4 10.6 3.6M15.6 10.4 13.4 3.6"/><path d="M9.8 13.8v3M14.2 13.8v3"/>',
+  braai:'<path d="M12 3.2c2.8 3.2 1.1 4.9 2.6 6.6 1.2 1.4 2.6 1.1 2.6 3.6a5.2 5.2 0 0 1-10.4 0c0-2.1 1-2.8 2-4.1 1.4-2 1-4.3 3.2-6.1z"/><path d="M12 14.2c1 .7 1 1.7.4 2.4"/>',
+  drinks:'<path d="M7.6 4h8.8l-1.1 5c-.3 1.4-1.5 2.4-2.9 2.4h-.8c-1.4 0-2.6-1-2.9-2.4z"/><path d="M12 11.4V19M9.2 19h5.6"/>',
+  pharmacy:'<path d="M9.6 4.4h4.8v5.2h5.2v4.8h-5.2v5.2H9.6v-5.2H4.4V9.6h5.2z"/>',
+  gifts:'<path d="M4.4 9.6h15.2V20H4.4z"/><path d="M4.4 9.6h15.2M12 9.6V20"/><path d="M12 9.6C10.4 6 8.4 5 7.4 6.3s1 3.3 4.6 3.3zm0 0C13.6 6 15.6 5 16.6 6.3s-1 3.3-4.6 3.3z"/>',
+  other:'<circle cx="6" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="18" cy="12" r="1.7"/>'
 };
 const ico = (id) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICO[id] || ICO.misc) + '</svg>';
 
+function kindOf(it){ return it.kind === "buy" ? "buy" : "todo"; }
 function render(){
-  const items = Object.values(state.items).filter(i => !i.x);
-  const done  = items.filter(i => i.d);
-  const pct   = items.length ? done.length/items.length : 0;
+  const everything = Object.values(state.items).filter(i => !i.x);
+  const items      = everything.filter(i => kindOf(i) === kind);
+  const done       = items.filter(i => i.d);
+  const pct        = items.length ? done.length / items.length : 0;
+
   $("#barFill").style.width = (pct*100).toFixed(1) + "%";
   const bp = $("#barPlane");
   if(bp) bp.style.left = (pct*100).toFixed(2) + "%";
@@ -789,12 +862,25 @@ function render(){
   $("#doneCount").textContent = done.length;
   $("#allCount").textContent = items.length;
 
+  const nTodo = everything.filter(i => kindOf(i) === "todo");
+  const nBuy  = everything.filter(i => kindOf(i) === "buy");
+  const leftTodo = nTodo.filter(i => !i.d).length;
+  const leftBuy  = nBuy.filter(i => !i.d).length;
+  if($("#cntTodo")) $("#cntTodo").textContent = leftTodo;
+  if($("#cntBuy"))  $("#cntBuy").textContent  = leftBuy;
+  $$(".tab").forEach(t => t.classList.toggle("on", t.dataset.kind === kind));
+
+  const cats = KINDS[kind].cats;
+  const known = cats.map(c => c.id);
+  const strays = items.filter(i => known.indexOf(i.c) < 0).sort((a,b) => (a.u||0) - (b.u||0));
+
   const host = $("#sections");
-  host.innerHTML = CATS.map(cat => {
-    const list = items.filter(i => i.c === cat.id).sort((a,b) => (a.u||0) - (b.u||0));
+  host.innerHTML = cats.map((cat, idx) => {
+    let list = items.filter(i => i.c === cat.id).sort((a,b) => (a.u||0) - (b.u||0));
+    if(idx === cats.length - 1 && strays.length) list = list.concat(strays);
     if(!list.length) return "";
     const d = list.filter(i => i.d).length;
-    const col = d === list.length ? "var(--good)" : "var(--accent)";
+    const col = d === list.length ? "var(--good)" : "var(--amber)";
     const collapsed = localStorage.getItem("cpt.closed." + cat.id) === "1" ? " collapsed" : "";
     return '<section class="' + collapsed.trim() + '" data-cat="' + cat.id + '">' +
       '<div class="shead" data-toggle="' + cat.id + '">' +
@@ -807,13 +893,15 @@ function render(){
     '</section>';
   }).join("");
 
-  $("#newCat").innerHTML = CATS.map(c => '<option value="' + c.id + '">' + c.ic + "  " + c.nm + '</option>').join("");
+  $("#newCat").innerHTML = cats.map(c => '<option value="' + c.id + '">' + c.nm + '</option>').join("");
   $$(".chip[data-who]").forEach(b => {
     b.classList.toggle("on", b.dataset.who === me);
     b.classList.toggle("them", b.dataset.who === "b");
     b.textContent = b.dataset.who === "a" ? names.a : names.b;
   });
-  if(pct === 1 && items.length >= 8) allDone();
+
+  const everythingPct = everything.length ? everything.filter(i => i.d).length / everything.length : 0;
+  if(everythingPct === 1 && everything.length >= 8) allDone();
 }
 function row(it){
   const whoLabel = it.w === "both" ? "Both" : (it.w === "a" ? names.a : names.b);
@@ -1016,7 +1104,7 @@ function addItem(){
   const t = $("#newItem").value.trim();
   if(!t) return;
   const id = uid();
-  state.items[id] = {id, t, c:$("#newCat").value, w:$("#newWho").value, d:0, u:now()};
+  state.items[id] = {id, t, c:$("#newCat").value, w:$("#newWho").value, d:0, u:now(), kind:kind};
   $("#newItem").value = "";
   save(); render(); syncOnce();
   if(state.items[id]) toast("Added ✓");
@@ -1025,6 +1113,13 @@ $$(".chip[data-who]").forEach(b => b.addEventListener("click", () => {
   me = b.dataset.who;
   localStorage.setItem(LS.who, me);
   render();
+}));
+$$(".tab").forEach(t => t.addEventListener("click", () => {
+  kind = t.dataset.kind;
+  localStorage.setItem("cpt.kind", kind);
+  render();
+  const nb = $("#newItem");
+  if(nb) nb.placeholder = kind === "buy" ? "Add something to buy…" : "Add something to remember…";
 }));
 $("#openSettings").addEventListener("click", () => {
   $("#fbUrl").value = cfg.fbUrl || "";
@@ -1094,6 +1189,7 @@ $("#passClose").addEventListener("click", () => $("#passModal").classList.remove
 
 /* -------------------------------- boot ------------------------------ */
 load();
+$("#newItem").placeholder = kind === "buy" ? "Add something to buy…" : "Add something to remember…";
 render();
 tick();
 setInterval(tick, 1000);
