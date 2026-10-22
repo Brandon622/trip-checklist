@@ -32,6 +32,28 @@ body{
 
 /* ============ HERO: Table Bay, first light ============ */
 .hero{position:relative;height:clamp(300px,60vw,392px);overflow:hidden;background:#1e0b16}
+.sky-life{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
+.flyer{position:absolute;left:-10%;line-height:0;color:#ffd166;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.flyer.is-bird{color:#ffcf9a}
+.flyer svg{display:block}
+.flyer.is-bird svg{animation:bob 1.15s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-2.5px)}to{transform:translateY(2.5px)}}
+@keyframes crossR{from{left:-10%}to{left:110%}}
+@keyframes crossL{from{left:110%}to{left:-10%}}
+#cd.away{border-color:rgba(255,111,174,.42);box-shadow:0 18px 50px rgba(255,61,139,.16)}
+#cd.away #cdLabel{color:var(--them)}
+#cd.away #cdD,#cd.away #cdH,#cd.away #cdM,#cd.away #cdS{color:var(--gold)}
+#cd.done #cdLabel{color:var(--good)}
+.route{display:flex;gap:12px;align-items:center;margin-top:14px;padding:12px 15px;
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  border:1px solid var(--line);border-radius:16px}
+.samap{width:126px;height:117px;flex:none}
+.routeinfo{min-width:0}
+.rlab{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:800}
+.rbig{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:700;color:var(--ink);margin-top:3px;line-height:1.15}
+.rbig span{color:var(--amber);padding:0 2px}
+.rsm{font-size:11.5px;color:var(--muted);margin-top:4px}
+.rsm2{font-size:11px;color:var(--dim);margin-top:3px}
 .artboard{position:absolute;inset:0}
 .hero svg.scene.scene-tall{display:none}
 @media (max-width:599px){
@@ -483,6 +505,7 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
   </svg>
 
   <div class="scrim"></div>
+  <div class="sky-life" id="skyLife" aria-hidden="true"></div>
   </div>
 
   <div class="heroIn">
@@ -507,6 +530,42 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     </div>
     <div class="mini" id="cdMini"></div>
   </div>
+  <div class="route">
+        <svg class="samap" viewBox="0 0 400 372" aria-hidden="true">
+      <defs>
+        <linearGradient id="landG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffb08a" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#ff8a5a" stop-opacity=".12"/>
+        </linearGradient>
+      </defs>
+      <path d="M356.5 206.6L352.0 210.3L342.5 223.3L336.2 236.5L323.4 254.9L297.9 281.4L282.0 296.8L264.9 308.5L241.3 318.4L229.8 319.8L226.9 326.9L213.2 323.1L202.0 328.0L177.6 323.0L163.9 326.2L154.6 324.8L131.3 335.0L112.0 339.0L98.1 348.7L87.8 349.3L78.3 340.2L70.6 339.7L60.9 328.3L59.9 331.8L56.9 324.9L57.0 309.9L49.7 292.7L56.9 288.0L56.4 268.3L41.6 244.3L30.2 222.5L30.2 222.5L14.0 189.1L24.8 176.4L33.7 183.5L37.5 194.4L47.6 196.3L61.8 201.1L74.0 199.3L94.1 186.2L94.1 91.4L100.2 95.2L113.6 119.6L111.5 135.2L116.6 144.2L132.7 141.6L144.0 130.2L154.7 122.5L160.2 110.2L171.2 104.2L180.7 107.3L191.5 114.5L209.9 115.8L224.3 109.8L226.6 101.8L230.6 89.5L242.8 87.5L249.6 77.8L257.1 60.7L277.4 41.6L309.3 22.7L318.5 22.9L329.4 27.3L337.0 24.2L349.0 26.8L359.8 62.9L365.7 81.1L361.7 109.7L363.6 119.0L352.2 114.3L345.7 116.1L343.6 123.6L337.4 133.2L337.6 142.1L351.1 156.0L364.3 153.2L368.9 141.8L386.0 142.0L380.4 160.7L377.7 182.0L371.9 193.6L356.5 206.6Z" fill="url(#landG)" stroke="rgba(255,205,175,.52)" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M299.1 198.8L289.2 190.9L278.7 196.2L266.5 206.2L254.4 222.5L271.3 242.2L279.4 239.7L283.6 231.5L296.1 227.4L300.0 219.1L306.9 206.6L299.1 198.8Z" fill="url(#landG)" stroke="rgba(255,205,175,.52)" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M299.1 198.8L306.9 206.6L300.0 219.1L296.1 227.4L283.6 231.5L279.4 239.7L271.3 242.2L254.4 222.5L266.5 206.2L278.7 196.2L289.2 190.9L299.1 198.8Z" fill="#2b0a1a" stroke="rgba(255,205,175,.45)" stroke-width="2"/>
+      <path d="M278.1 128.1Q201.5 241.8 64.9 327.5" fill="none" stroke="#ffd166" stroke-width="2.8" stroke-dasharray="5 7"
+            stroke-linecap="round" opacity=".9"/>
+      <path id="routeLoop" d="M278.1 128.1Q201.5 241.8 64.9 327.5Q175.5 259.8 278.1 128.1" fill="none"/>
+      <circle cx="278.1" cy="128.1" r="7.5" fill="#ffd166"/>
+      <circle cx="278.1" cy="128.1" r="14" fill="none" stroke="#ffd166" stroke-opacity=".45" stroke-width="1.8"/>
+      <circle cx="64.9" cy="327.5" r="7.5" fill="#ff5f5f"/>
+      <circle cx="64.9" cy="327.5" r="14" fill="none" stroke="#ff5f5f" stroke-opacity=".45" stroke-width="1.8"/>
+      <text x="296.1" y="135.1" fill="#ffe6b8" font-size="27" font-weight="700" font-family="Inter,system-ui,sans-serif">JNB</text>
+      <text x="56.900000000000006" y="357.5" fill="#ffd3cf" font-size="27" font-weight="700" font-family="Inter,system-ui,sans-serif">CPT</text>
+      <g fill="#fff4e6" opacity=".96">
+        <path transform="scale(.48) translate(-11.5,-12)" d="M22 12c0 .7-.6 1.2-1.2 1.2h-6.2l-3.1 7.2-1.6-.7 1.8-6.5H6.4l-1.7 2.5-1.4-.6 1-3.1-1-3.1 1.4-.6 1.7 2.5h5.3L10 4.3l1.6-.7 3.1 7.2h6.1c.7 0 1.2.5 1.2 1.2z"/>
+        <animateMotion dur="9s" repeatCount="indefinite" rotate="auto" keyPoints="0;1;1;0"
+                       keyTimes="0;.46;.54;1" calcMode="linear">
+          <mpath href="#routeLoop"/>
+        </animateMotion>
+      </g>
+    </svg>
+    <div class="routeinfo">
+      <div class="rlab">The route</div>
+      <div class="rbig">Joburg <span>&#8594;</span> Cape Town</div>
+      <div class="rsm">1 268 km &middot; about 2h 05m in the air</div>
+      <div class="rsm2">Wheels up Fri 06:30 &middot; home Mon 19:00</div>
+    </div>
+  </div>
+
 
   <div class="who" id="who">
     <span class="hintlbl">I am</span>
@@ -627,7 +686,8 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
 const TRIP = {
   departISO: "2026-10-23T06:30:00+02:00",   // LIFT 06:30 JNB → CPT
   carISO:    "2026-10-23T10:00:00+02:00",   // car pickup window
-  backISO:   "2026-10-26T17:00:00+02:00",   // LIFT 17:00 CPT → JNB
+  returnISO: "2026-10-26T17:00:00+02:00",   // wheels up from CPT
+  homeISO:   "2026-10-26T19:00:00+02:00",   // back on the ground at JNB
 };
 
 const KINDS = {
@@ -721,6 +781,7 @@ let state = null;          // {items:{id:{...}}, meta:{}}
 let cfg   = {fbUrl:"", tripCode:""};
 let me    = "a";           // 'a' | 'b'
 let kind  = localStorage.getItem("cpt.kind") || "todo";   // 'todo' | 'buy'
+let lastPhase = null;   // before -> away -> done, so transitions can be celebrated
 let names = {a:"Me", b:"Partner"};
 let remoteOK = false;
 
@@ -920,35 +981,111 @@ function row(it){
 /* ------------------------------ countdown --------------------------- */
 function tick(){
   const nowMs = now();
-  const dep = new Date(TRIP.departISO).getTime();
-  const back = new Date(TRIP.backISO).getTime();
-  let target = dep, label = "Wheels up in";
-  if(nowMs > dep){ target = back; label = "Home in"; }
-  if(nowMs > back){ target = null; }
-  $("#cdLabel").textContent = target ? label : "Trip complete";
-  let diff = target ? Math.max(0, target - nowMs) : 0;
+  const dep   = new Date(TRIP.departISO).getTime();
+  const home  = new Date(TRIP.homeISO).getTime();
+
+  let target, label, phase;
+  if(nowMs < dep){ target = dep;  label = "Wheels up in";        phase = "before"; }
+  else if(nowMs < home){ target = home; label = "Flight home in"; phase = "away"; }
+  else { target = null; label = "Home safe"; phase = "done"; }
+
+  if(lastPhase && phase !== lastPhase){
+    if(phase === "away"){
+      flyPlane();
+      toast("🛫 Wheels up — counting down to the flight home now.", 4600);
+    } else if(phase === "done"){
+      flyPlane();
+      toast("🏠 Welcome back. Twelve hundred kilometres, well spent.", 4600);
+    }
+  }
+  lastPhase = phase;
+
+  $("#cdLabel").textContent = label;
+  $("#cd").classList.toggle("away", phase === "away");
+  $("#cd").classList.toggle("done", phase === "done");
+
   if(target){
-    const d = Math.floor(diff/86400000);
-    const h = Math.floor(diff%86400000/3600000);
-    const m = Math.floor(diff%3600000/60000);
-    const s = Math.floor(diff%60000/1000);
-    $("#cdD").textContent = d; $("#cdH").textContent = String(h).padStart(2,"0");
-    $("#cdM").textContent = String(m).padStart(2,"0"); $("#cdS").textContent = String(s).padStart(2,"0");
+    const diff = Math.max(0, target - nowMs);
+    $("#cdD").textContent = Math.floor(diff/86400000);
+    $("#cdH").textContent = String(Math.floor(diff%86400000/3600000)).padStart(2,"0");
+    $("#cdM").textContent = String(Math.floor(diff%3600000/60000)).padStart(2,"0");
+    $("#cdS").textContent = String(Math.floor(diff%60000/1000)).padStart(2,"0");
     $("#cd").classList.toggle("soon", diff < 3*86400000 && diff > 86400000);
     $("#cd").classList.toggle("imminent", diff <= 86400000);
-    const car = new Date(TRIP.carISO).getTime();
-    const carDiff = car - nowMs;
+  } else {
+    ["#cdD","#cdH","#cdM","#cdS"].forEach(id => $(id).textContent = "--");
+    $("#cd").classList.remove("soon","imminent");
+  }
+
+  const car = new Date(TRIP.carISO).getTime();
+  const carDiff = car - nowMs;
+  if(phase === "before"){
     $("#cdMini").innerHTML =
       "<span>Departs <b>Fri 23 Oct, 06:30</b></span>" +
       "<span>Car " + (carDiff > 0
-          ? "in <b>" + Math.floor(carDiff/3600000) + "h " + Math.floor(carDiff%3600000/60000) + "m</b>"
-          : "<b>collected</b>") + "</span>" +
+        ? "in <b>" + Math.floor(carDiff/3600000) + "h " + Math.floor(carDiff%3600000/60000) + "m</b>"
+        : "<b>collected</b>") + "</span>" +
       "<span>Home <b>Mon 26, 19:00</b></span>";
+  } else if(phase === "away"){
+    const ret = new Date(TRIP.returnISO).getTime();
+    const retIn = ret - nowMs;
+    $("#cdMini").innerHTML =
+      "<span>We're in Cape Town 🏔️</span>" +
+      "<span>Leave CPT <b>Mon 26, 17:00</b>" + (retIn > 0
+        ? " · in <b>" + Math.floor(retIn/3600000) + "h</b>"
+        : " · <b>left</b>") + "</span>" +
+      "<span>Land JNB <b>19:00</b></span>";
   } else {
-    ["#cdD","#cdH","#cdM","#cdS"].forEach(s => $(s).textContent = "--");
-    $("#cdMini").innerHTML = "<span>Hope it was a good one.</span>";
+    $("#cdMini").innerHTML = "<span>Trip done. <b>What a weekend.</b></span>";
   }
 }
+
+/* ------------------------------ sky life ------------------------------ */
+const PLANE_GLYPH = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 12c0 .7-.6 1.2-1.2 1.2h-6.2l-3.1 7.2-1.6-.7 1.8-6.5H6.4l-1.7 2.5-1.4-.6 1-3.1-1-3.1 1.4-.6 1.7 2.5h5.3L10 4.3l1.6-.7 3.1 7.2h6.1c.7 0 1.2.5 1.2 1.2z"/></svg>';
+const BIRD_GLYPH  = '<svg viewBox="0 0 24 10" width="17" height="7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 8Q7 1 12 7Q17 1 22 8"/></svg>';
+
+function skySpawn(){
+  const layer = $("#skyLife");
+  if(!layer) return;
+  const plane = Math.random() < 0.42;
+  const flock = plane ? 1 : 1 + Math.floor(Math.random() * 3);
+  const dir   = Math.random() < 0.5 ? 1 : -1;
+  const h     = layer.clientHeight || 240;
+  // only the top slice of the band is open sky — below that is mountain and water
+  const baseY = plane ? h * (0.05 + Math.random() * 0.30)
+                      : h * (0.08 + Math.random() * 0.16);
+  const dur   = plane ? 18 + Math.random() * 12 : 9 + Math.random() * 8;
+  for(let i = 0; i < flock; i++){
+    const el = document.createElement("span");
+    el.className = "flyer " + (plane ? "is-plane" : "is-bird");
+    el.innerHTML = plane ? PLANE_GLYPH : BIRD_GLYPH;
+    const sc = plane ? 0.8 + Math.random() * 0.55 : 0.6 + Math.random() * 0.5;
+    el.style.top = (baseY + (plane ? 0 : i * 10 + Math.random() * 10)).toFixed(0) + "px";
+    el.style.opacity = (plane ? 0.55 + Math.random() * 0.4 : 0.4 + Math.random() * 0.3).toFixed(2);
+    el.style.transform = "scale(" + sc.toFixed(2) + ") scaleX(" + dir + ")";
+    el.style.animation = (dir > 0 ? "crossR " : "crossL ") + (dur + i * 0.7).toFixed(1) + "s linear forwards";
+    el.addEventListener("animationend", () => el.remove());
+    layer.appendChild(el);
+  }
+}
+function skyLoop(){
+  skySpawn();
+  setTimeout(skyLoop, 2400 + Math.random() * 4400);
+}
+function flyPlane(){
+  const layer = $("#skyLife");
+  if(!layer) return;
+  const el = document.createElement("span");
+  el.className = "flyer is-plane";
+  el.innerHTML = PLANE_GLYPH;
+  el.style.top = (layer.clientHeight * 0.2).toFixed(0) + "px";
+  el.style.opacity = ".92";
+  el.style.transform = "scale(1.5)";
+  el.style.animation = "crossR 6.5s cubic-bezier(.3,.7,.4,1) forwards";
+  el.addEventListener("animationend", () => el.remove());
+  layer.appendChild(el);
+}
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) skyLoop();
 
 /* -------------------------------- toast ----------------------------- */
 function toast(msg, ms){
