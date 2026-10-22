@@ -440,6 +440,13 @@ input[type=text]:focus,select:focus{outline:none;border-color:var(--sea);box-sha
 .addRow2 select{flex:1.35;font-size:12.5px;padding:9px 8px;min-height:38px;text-overflow:ellipsis}
 
 /* ============ footer ============ */
+.syncpill{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line2);border-radius:999px;
+  background:rgba(255,255,255,.05);color:var(--muted);font:inherit;font-size:10px;font-weight:800;
+  letter-spacing:.03em;padding:5px 9px;cursor:pointer;min-height:28px;white-space:nowrap}
+.syncpill b{font-weight:800}
+.syncpill.ok{color:#8ff0ab;border-color:rgba(100,224,138,.5);background:rgba(100,224,138,.12)}
+.syncpill.err{color:#ffb3b3;border-color:rgba(255,77,77,.5);background:rgba(255,77,77,.12)}
+.syncpill.local{color:var(--dim)}
 .foot{margin-top:24px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:11.5px;color:var(--dim)}
 .dot{width:7px;height:7px;border-radius:99px;display:inline-block;margin-right:6px;background:#4a5a6e;vertical-align:1px}
 .dot.ok{background:var(--good);box-shadow:0 0 8px rgba(111,207,127,.7)}
@@ -819,6 +826,9 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     <span style="flex:1"></span>
     <button class="chip tiny" id="openThemes">🎨 Theme</button>
     <button class="chip tiny" id="openSettings">⚙︎ Sync</button>
+    <button class="syncpill local" id="syncPill" type="button" title="Sync status">
+      <span class="dot local"></span><b>Local</b>
+    </button>
   </div>
 
   <div class="tabs" id="tabs">
@@ -1140,9 +1150,18 @@ async function fbPut(s){
   const r = await fetch(u, {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(s)});
   if(!r.ok) throw new Error("HTTP " + r.status);
 }
+let lastSyncAt = null;
 function setSync(kind, text){
   const el = $("#syncState");
-  el.innerHTML = '<span class="dot ' + kind + '"></span>' + text;
+  if(el) el.innerHTML = '<span class="dot ' + kind + '"></span>' + text;
+  const pill = $("#syncPill");
+  if(pill){
+    const label = kind === "ok" ? "Synced" : kind === "err" ? "Sync error" : "Local";
+    pill.className = "syncpill " + kind;
+    pill.innerHTML = '<span class="dot ' + kind + '"></span><b>' + label + '</b>';
+    pill.title = text;
+  }
+  if(kind === "ok") lastSyncAt = Date.now();
 }
 let syncing = false;
 async function syncOnce(manual){
@@ -1940,6 +1959,16 @@ $$(".tab").forEach(t => t.addEventListener("click", () => {
   const nb = $("#newItem");
   if(nb) nb.placeholder = kind === "buy" ? "Add something to buy…" : "Add something to remember…";
 }));
+$("#syncPill").addEventListener("click", () => {
+  $("#fbUrl").value = cfg.fbUrl || "";
+  $("#tripCode").value = cfg.tripCode || "";
+  $("#settings").classList.add("open");
+});
+$("#syncState").addEventListener("click", () => {
+  $("#fbUrl").value = cfg.fbUrl || "";
+  $("#tripCode").value = cfg.tripCode || "";
+  $("#settings").classList.add("open");
+});
 $("#openSettings").addEventListener("click", () => {
   $("#fbUrl").value = cfg.fbUrl || "";
   $("#tripCode").value = cfg.tripCode || "";
