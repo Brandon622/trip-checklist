@@ -980,6 +980,26 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
    Trip checklist — local-first, optional Firebase Realtime Database sync.
    No frameworks, no build step, no SDK: Firebase is plain REST.
    ===================================================================== */
+/* -- failure net: a broken line must never leave a silently dead page -- */
+(function(){
+  function strip(msg){
+    if(!document.body) return;
+    var d = document.getElementById("__errstrip");
+    if(!d){
+      d = document.createElement("div"); d.id = "__errstrip";
+      d.style.cssText = "position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#7c1224;" +
+        "color:#fff;font:12px/1.45 system-ui,sans-serif;padding:10px 12px;border-radius:12px;" +
+        "box-shadow:0 10px 30px rgba(0,0,0,.5)";
+      document.body.appendChild(d);
+    }
+    d.textContent = "Something broke: " + msg + " — reload the page to try again.";
+  }
+  window.addEventListener("error", function(e){ strip(e.message || "unknown error"); });
+  window.addEventListener("unhandledrejection", function(e){
+    strip((e.reason && e.reason.message) || String(e.reason || "unknown"));
+  });
+})();
+
 const TRIP = {
   departISO: "2026-10-23T06:30:00+02:00",   // LIFT 06:30 JNB → CPT
   carISO:    "2026-10-23T10:00:00+02:00",   // car pickup window
@@ -1095,7 +1115,7 @@ function load(){
     const raw = localStorage.getItem(LS.state);
     state = raw ? JSON.parse(raw) : blankState();
   }catch(e){ state = blankState(); }
-  if(!state.items) state.items = {};
+  if(!state || typeof state !== "object" || !state.items) state = blankState();
   // one-time migration: devices that saved state before "to buy" existed must
   // still receive the shopping seed, or they'd only ever show the to-do list
   if(!state.meta) state.meta = {};
@@ -2024,7 +2044,7 @@ $("#testCfg").addEventListener("click", async () => {
     out.innerHTML = "✕ <b>Couldn't reach it</b> (" + e.message + ") — check the URL starts with https:// and that you have signal." + showTarget;
   }
 });
-$("#clearCfg").addEventListener$("#clearCfg").addEventListener("click", () => {
+$("#clearCfg").addEventListener("click", () => {
   cfg = {fbUrl:"", tripCode:""};
   localStorage.setItem(LS.cfg, JSON.stringify(cfg));
   $("#settings").classList.remove("open");
@@ -2048,6 +2068,7 @@ $("#exportLink").addEventListener("click", () => {
 $("#passClose").addEventListener("click", () => $("#passModal").classList.remove("open"));
 
 /* -------------------------------- boot ------------------------------ */
+try{
 load();
 $("#newItem").placeholder = kind === "buy" ? "Add something to buy…" : "Add something to remember…";
 render();
@@ -2056,6 +2077,19 @@ setInterval(tick, 1000);
 if(fbBase()) syncOnce();
 setInterval(() => { if(fbBase()) syncOnce(); }, 8000);
 document.addEventListener("visibilitychange", () => { if(!document.hidden && fbBase()) syncOnce(); });
+}catch(err){
+  console.error("boot failed:", err);
+  try{ state = blankState(); render(); }catch(e2){}
+  var d = document.getElementById("__errstrip");
+  if(!d && document.body){
+    d = document.createElement("div"); d.id = "__errstrip";
+    d.style.cssText = "position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#7c1224;" +
+      "color:#fff;font:12px/1.45 system-ui,sans-serif;padding:10px 12px;border-radius:12px";
+    document.body.appendChild(d);
+  }
+  if(d) d.textContent = "Start-up problem: " + (err && err.message ? err.message : err) +
+    " — the list still works on this device; there is a backup link in the footer.";
+}
 </script>
 </body>
 </html>
