@@ -194,6 +194,30 @@ html[data-theme="ember"]{
 .sw .strip{display:flex;height:11px;border-radius:4px;overflow:hidden}
 .sw .strip i{flex:1}
 
+.wxbar{margin-top:12px;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  padding:11px 0 8px;overflow:hidden}
+.wxhead{display:flex;align-items:center;gap:8px;padding:0 14px 10px;
+  font-size:11.5px;color:var(--dim);line-height:1.4}
+.wxhead b{color:var(--muted);font-weight:700}
+.wxrow{display:flex;align-items:flex-start;gap:8px;padding:3px 0 2px}
+.wxc{flex:none;width:34px;padding-left:13px;padding-top:14px;
+  font-size:9.5px;font-weight:900;letter-spacing:.08em;color:var(--muted)}
+.wxtrack{display:flex;gap:7px;overflow-x:auto;padding:2px 14px 7px 0;
+  scroll-snap-type:x proximity;scrollbar-width:none}
+.wxtrack::-webkit-scrollbar{display:none}
+.wcard{flex:none;min-width:51px;scroll-snap-align:start;display:flex;flex-direction:column;
+  align-items:center;gap:2px;padding:7px 6px 6px;border-radius:11px;
+  background:rgba(255,255,255,.035);border:1px solid transparent;color:var(--ink)}
+.wcard.today{border-color:var(--line2);background:rgba(255,255,255,.075)}
+.wcard.trip{border-color:rgba(255,166,61,.5);background:rgba(255,166,61,.12)}
+.wcard.today.trip{border-color:var(--amber)}
+.wd{font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+.wi{color:var(--amber);line-height:0;margin:2px 0 1px}
+.wcard.trip .wi{color:var(--gold)}
+.wt{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.wt b{color:var(--ink);font-weight:800}
+.wr{font-size:9px;color:var(--them);min-height:10px;font-weight:800}
 .artboard{position:absolute;inset:0}
 .hero svg.scene.scene-tall{display:none}
 @media (max-width:599px){
@@ -716,9 +740,19 @@ code{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:5px;pa
     </div>
   </div>
 
-  <div class="wx" id="wx">
-    <span class="wxDot"></span>
-    <span id="wxLine">Cape Town sky &middot; reading the weather&hellip;</span>
+  <div class="wxbar" id="wx">
+    <div class="wxhead">
+      <span class="wxDot"></span>
+      <span id="wxLine">Cape Town sky &middot; reading the weather&hellip;</span>
+    </div>
+    <div class="wxrow">
+      <span class="wxc">JHB</span>
+      <div class="wxtrack" id="trackJnb"></div>
+    </div>
+    <div class="wxrow">
+      <span class="wxc">CPT</span>
+      <div class="wxtrack" id="trackCpt"></div>
+    </div>
   </div>
 
 
@@ -1370,20 +1404,81 @@ function paintWeather(){
   }
 }
 
+const TRIP_DAYS = ["2026-10-23","2026-10-24","2026-10-25","2026-10-26"];
+
+function wxIcon(code){
+  const A = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+  const wrap = inner => '<svg viewBox="0 0 24 24" width="19" height="19" ' + A + '>' + inner + '</svg>';
+  const cloud = '<path d="M6.6 15.4h9.1a2.85 2.85 0 0 0 .25-5.68 4.6 4.6 0 0 0-8.8-1.2A3.45 3.45 0 0 0 6.6 15.4z"/>';
+  const sun = '<circle cx="12" cy="12" r="3.6"/><path d="M12 3.4v1.9M12 18.7v1.9M3.4 12h1.9M18.7 12h1.9M5.9 5.9l1.4 1.4M16.7 16.7l1.4 1.4M18.1 5.9l-1.4 1.4M7.3 16.7l-1.4 1.4"/>';
+  const drops3 = '<path d="M9 17.3l-.8 2.5M13 17.3l-.8 2.5M17 17.3l-.8 2.5"/>';
+  if(code === 0 || code === 1) return wrap(sun);
+  if(code === 2) return wrap('<circle cx="8.6" cy="8.2" r="2.6"/><path d="M8.6 3.6v1.1M3.9 8.2h1.1M5.2 4.8l.8.8M12 4.8l-.8.8"/>' + cloud);
+  if(code === 3) return wrap(cloud);
+  if(code === 45 || code === 48) return wrap(cloud + '<path d="M4 18.6h16M6.5 21.2h11"/>');
+  if(code >= 51 && code <= 57) return wrap(cloud + drops3);
+  if(code >= 61 && code <= 67) return wrap(cloud + drops3);
+  if(code >= 71 && code <= 77) return wrap(cloud + '<path d="M9 18v2.6M7.7 19.3h2.6M15.5 18v2.6M14.2 19.3h2.6"/>');
+  if(code >= 80 && code <= 82) return wrap('<circle cx="8" cy="7.8" r="2.4"/><path d="M8 3.6v1M3.8 7.8h1"/>' + cloud + drops3);
+  if(code >= 95) return wrap(cloud + '<path d="M12.4 16.6l-2 3.3h2.7l-1.2 2.6"/>');
+  return wrap(cloud);
+}
+
+function paintWeek(cities){
+  const map = {jnb: cities[0], cpt: cities[1]};
+  Object.keys(map).forEach(key => {
+    const track = document.getElementById(key === "jnb" ? "trackJnb" : "trackCpt");
+    const city = map[key];
+    if(!track) return;
+    if(!city || !city.daily || !city.daily.time){ track.innerHTML = ""; return; }
+    const d = city.daily;
+    track.innerHTML = d.time.map((iso, i) => {
+      const dt = new Date(iso + "T12:00:00");
+      const code = d.weather_code ? d.weather_code[i] : 3;
+      const mx = Math.round(d.temperature_2m_max[i]);
+      const mn = Math.round(d.temperature_2m_min[i]);
+      const pr = d.precipitation_probability_max ? d.precipitation_probability_max[i] : null;
+      const trip  = TRIP_DAYS.indexOf(iso) > -1;
+      const today = i === 0;
+      const name  = (today ? "Now" : dt.toLocaleDateString("en-ZA", {weekday: "short"})) + " " + dt.getDate();
+      const tip   = (city.daily.time[i] || "") + " · " + mx + "°/" + mn + "°" + (pr != null ? " · " + pr + "% rain" : "");
+      return '<div class="wcard' + (trip ? " trip" : "") + (today ? " today" : "") + '" title="' + tip + '">' +
+        '<span class="wd">' + name + '</span>' +
+        '<span class="wi">' + wxIcon(code) + '</span>' +
+        '<span class="wt"><b>' + mx + '&deg;</b> ' + mn + '&deg;</span>' +
+        '<span class="wr">' + (pr != null && pr >= 10 ? pr + "%" : "") + '</span>' +
+      '</div>';
+    }).join("");
+  });
+}
+
 async function loadWeather(){
-  try{
-    const url = "https://api.open-meteo.com/v1/forecast?latitude=-33.9249&longitude=18.4241"
-      + "&current=temperature_2m,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,precipitation,is_day"
-      + "&daily=sunrise,sunset&timezone=Africa%2FJohannesburg&forecast_days=1";
-    const r = await fetch(url, {cache: "no-store"});
+  const curUrl = "https://api.open-meteo.com/v1/forecast?latitude=-33.9249&longitude=18.4241"
+    + "&current=temperature_2m,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,precipitation,is_day"
+    + "&daily=sunrise,sunset&timezone=Africa%2FJohannesburg&forecast_days=1";
+  const weekUrl = "https://api.open-meteo.com/v1/forecast?latitude=-26.2041,-33.9249&longitude=28.0473,18.4241"
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max"
+    + "&timezone=Africa%2FJohannesburg&forecast_days=7";
+
+  const grab = url => fetch(url, {cache: "no-store"}).then(r => {
     if(!r.ok) throw new Error("HTTP " + r.status);
-    const j = await r.json();
+    return r.json();
+  });
+  const [curRes, weekRes] = await Promise.allSettled([grab(curUrl), grab(weekUrl)]);
+
+  if(curRes.status === "fulfilled"){
+    const j = curRes.value;
     wx = Object.assign({}, j.current, {sunrise: j.daily.sunrise[0], sunset: j.daily.sunset[0]});
     paintWeather();
     placeSky();
-  }catch(e){
+  } else {
     const line = $("#wxLine");
     if(line) line.innerHTML = "Cape Town sky &middot; <b>offline</b> — showing a clear sunset instead";
+  }
+
+  if(weekRes.status === "fulfilled"){
+    const w = weekRes.value;
+    paintWeek(Array.isArray(w) ? w : [w, w]);
   }
 }
 
